@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javaapplication10;
+package Sprint4_quizkamp_server;
 
 /**
  *
  * @author work
  */
-public class JavaApplication10 {
+public class Sprint4_quizkamp_server {
 
     /**
      * @param args the command line arguments
