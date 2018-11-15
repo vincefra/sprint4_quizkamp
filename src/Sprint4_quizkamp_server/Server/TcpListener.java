@@ -2,7 +2,7 @@
  *  
 Java18-OOJ
  */
-package Sprint4_quizkamp_server;
+package Sprint4_quizkamp_server.Server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
