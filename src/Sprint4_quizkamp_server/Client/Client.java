@@ -15,7 +15,7 @@ public class Client {
         int port = 12345;
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("172.20.201.168");
+            ip = InetAddress.getByName("172.20.201.8");
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
@@ -28,13 +28,9 @@ public class Client {
 
             Object receivedObject;
 
-            //Send initialization object when connected
-            objectOut.writeObject("initObject");
-
-            //when receiving an object, add it to an arraylist and send another object to the server
+            //when receiving an object, add it to an arraylist
             while ((receivedObject = objectIn.readObject()) != null) {
                     myReceivedObjects.add(receivedObject);
-                    objectOut.writeObject("bye");
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Kunde inte ansluta.");
