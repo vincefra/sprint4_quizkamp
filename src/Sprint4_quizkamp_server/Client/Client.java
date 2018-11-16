@@ -15,7 +15,7 @@ public class Client {
         int port = 12345;
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("172.20.208.79");
+            ip = InetAddress.getByName("172.20.201.8");
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();

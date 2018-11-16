@@ -23,16 +23,19 @@ public class TcpListener {
             try 
             {
                 //final Socket socketToClient = serverSocket.accept();
-                TcpServer playerX = new TcpServer(serverSocket.accept(),'X');
+                TcpServer player1 = new TcpServer(serverSocket.accept(),'1');
                 System.out.println("p1 connected");
                 
-                TcpServer playerO = new TcpServer(serverSocket.accept(),'O');
+                TcpServer player2 = new TcpServer(serverSocket.accept(),'2');
                 System.out.println("p2 connected");
-
-                //playerX.setOpponent(playerO);
-                //playerO.setOpponent(playerX);
                 
-//                game.currentPlayer = playerX;
+                player1.setOpponent(player2);
+                player2.setOpponent(player1);
+
+                //playerX.setOpponent(player2);
+                //playerO.setOpponent(player1);
+                
+//                game.currentPlayer = player1;
             } 
             catch (IOException e) 
             {
