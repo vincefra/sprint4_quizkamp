@@ -134,6 +134,9 @@ public class TcpServer implements Runnable
         {
             e.printStackTrace();
         }
+       
+            
+        
 //        try {
 //            objectOutgoing.writeObject("All players connected");
 ////            if(mark=='X')

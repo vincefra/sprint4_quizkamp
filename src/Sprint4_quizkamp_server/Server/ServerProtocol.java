@@ -20,7 +20,7 @@ public class ServerProtocol {
 
    
    private int state=S1JOINED;
-//   int categorySize = QuestionsHandler.getCategories().size();
+   int categorySize = QuestionsHandler.getCategories().size();
    
    
    public Object processInput(String theInput) {
@@ -29,12 +29,13 @@ public class ServerProtocol {
         int rightNum=0; 
         int wrongNum=0;
             
-//        if (state == PLAYERSJOINED) {
-//            theOutput = "Choose a category:" ;
-//            for(int i=0;i<categorySize;i++){
-//                theOutput= i + "\t"+QuestionsHandler.getCategories().get(i).toString();
-//            }
-//            state =SENTCATALOG ;
+        if (state == PLAYERSJOINED) {
+            theOutput = "Choose a category:" ;
+            for(int i=0;i<categorySize;i++){
+                theOutput= i + "\t"+QuestionsHandler.getCategories().get(i).toString();
+            }
+            state =SENTCATALOG ;
+        }
             
          if (state == SENTCATALOG) {
             Question[] questions=QuestionsHandler.GetQuestions(Integer.parseInt(theInput), 2, false);
