@@ -28,13 +28,9 @@ public class Client {
 
             Object receivedObject;
 
-            //Send initialization object when connected
-            objectOut.writeObject("initObject");
-
-            //when receiving an object, add it to an arraylist and send another object to the server
+            //when receiving an object, add it to an arraylist
             while ((receivedObject = objectIn.readObject()) != null) {
                     myReceivedObjects.add(receivedObject);
-                    objectOut.writeObject("bye");
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Kunde inte ansluta.");
