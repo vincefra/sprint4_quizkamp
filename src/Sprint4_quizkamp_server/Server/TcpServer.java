@@ -51,9 +51,47 @@ public class TcpServer implements Runnable
    @Override
     public void run(){
 
-        while (true)
+        try ( 
+            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(clientSocket.getInputStream());
+            ) 
+        {          
+            String inputLine;
+            while ((inputLine = (String)ois.readObject()) != null) 
+            {   
+                if (inputLine.length() > 1 && inputLine.contains("|"))
+                {
+                    switch (inputLine.split("|")[0])
+                    {
+                        case "CHAT":
+                        {
+                            System.out.println("P1 skickade följande: " + inputLine.split("|")[1]);
+                            break;
+                        }
+                        
+                        case "SHUTDOWN":
+                        {
+                            System.exit(0);
+                        }
+
+                        default:
+                            System.out.println(inputLine);
+                    }
+                }
+               /* 
+               if(inputLine.equalsIgnoreCase("Hej"))
+                   oos.writeObject("Hello");
+               else if (inputLine.equalsIgnoreCase("Bye"))
+               {
+                  oos.writeObject("Hej då");
+                  break;
+               }
+               System.out.print(inputLine);*/
+            }
+        }
+        catch (Exception e)
         {
-            
+            e.printStackTrace();
         }
 //        try {
 //            oos.writeObject("All players connected");
