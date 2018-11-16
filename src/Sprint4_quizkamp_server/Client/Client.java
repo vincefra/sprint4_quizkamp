@@ -1,10 +1,12 @@
 package Sprint4_quizkamp_server.Client;
 
+
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Client {
 
@@ -27,19 +29,18 @@ public class Client {
              ObjectInputStream objectIn = new ObjectInputStream(socketToServer.getInputStream())) {
 
             Object receivedObject;
-            //when receiving an object, add it to an arraylist
-            while ((receivedObject = objectIn.readObject()) != null) {
-                    //myReceivedObjects.add(receivedObject);
-                if (receivedObject instanceof String) {
-                    String stringObject = (String) receivedObject;
-                    System.out.println("Client: Tog emot " + stringObject);
-                    if (stringObject.equalsIgnoreCase("welcome")) {
-                        System.out.println("Client: skickar D1");
-                        objectOut.writeObject("D1");
-                    }
-                }
+            Scanner sc = new Scanner(System.in);
+            String toSend;
 
+            while (true) {
+                if ((receivedObject = objectIn.readObject()) != null) {
+                    System.out.println((String) receivedObject);
+                }
+                System.out.println("Skriv något: ");
+                toSend = "CHAT-" + sc.nextLine();
+                objectOut.writeObject(toSend);
             }
+
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Connection error.");
             e.printStackTrace();
