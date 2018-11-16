@@ -27,18 +27,26 @@ public class Client {
              ObjectInputStream objectIn = new ObjectInputStream(socketToServer.getInputStream())) {
 
             Object receivedObject;
-
             //when receiving an object, add it to an arraylist
             while ((receivedObject = objectIn.readObject()) != null) {
-                    myReceivedObjects.add(receivedObject);
+                    //myReceivedObjects.add(receivedObject);
+                if (receivedObject instanceof String) {
+                    String stringObject = (String) receivedObject;
+                    System.out.println("Client: Tog emot " + stringObject);
+                    if (stringObject.equalsIgnoreCase("welcome")) {
+                        System.out.println("Client: skickar D1");
+                        objectOut.writeObject("D1");
+                    }
+                }
+
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Kunde inte ansluta.");
+            System.out.println("Connection error.");
             e.printStackTrace();
         }
         //Print all objects from list of received objects
-        for (Object o : myReceivedObjects) {
-            System.out.println("Client: Received object: " + o);
-        }
+//        for (Object o : myReceivedObjects) {
+//            System.out.println("Client: Received object: " + o);
+//        }
     }
 }
