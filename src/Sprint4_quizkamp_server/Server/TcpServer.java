@@ -23,12 +23,14 @@ public class TcpServer implements Runnable
     TcpServer opponent;
     char mark;
 
-    ObjectOutputStream sendToOpponent;
+    ObjectOutputStream objectOutgoing;
     
     public TcpServer(Socket clientSocket,char mark) throws IOException 
     {
         this.clientSocket = clientSocket;
         this.mark= mark;
+        objectOutgoing = new ObjectOutputStream(clientSocket.getOutputStream());
+        
         activity.start(); 
 //        try { 
 //            objectOutgoing = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -48,15 +50,19 @@ public class TcpServer implements Runnable
     public void setOpponent(TcpServer opponent) throws IOException 
     {
         this.opponent = opponent;
-        sendToOpponent = new ObjectOutputStream(opponent.clientSocket.getOutputStream());
+        //sendToOpponent = (ObjectOutputStream)opponent.clientSocket.getOutputStream();
+    }
+    
+    public void sendData(String data) throws IOException
+    {
+        objectOutgoing.writeObject(data);
     }
      
    @Override
     public void run(){
 
         try ( 
-            ObjectOutputStream objectOutgoing = new ObjectOutputStream(clientSocket.getOutputStream());
-            ObjectInputStream objectIncoming = new ObjectInputStream(clientSocket.getInputStream());                      
+            ObjectInputStream objectIncoming = new ObjectInputStream(clientSocket.getInputStream());
             ) 
         {          
             String inputLine;
@@ -73,10 +79,33 @@ public class TcpServer implements Runnable
                         {
                             if (opponent != null)
                             {
-                                opponent.sendToOpponent.writeObject("Player" + this.mark + " skickade följande: " + inputLine.split("-")[1]);
+                                opponent.sendData(inputLine.split("-")[1]);
+                                //opponent.sendToOpponent.writeObject("Player" + this.mark + " skickade följande: " + inputLine.split("-")[1]);
                                 System.out.println("Player" + this.mark + " skickade följande: " + inputLine.split("-")[1]);
                                 continue;
                             }
+                        }
+                        
+                        case "START":
+                        {
+                            if (opponent != null)
+                            {
+                                //SKAPA nytt game-object
+                                //SKICKA kategori till playert 1 game.generatecategory()
+                                //SKICKA vänta till player 2 game.wait()
+                            }
+                        }
+                        
+                        case "CATEGORY":
+                        {
+                            //SKICKA game.generatequestions(int catid) till player 1 i sträng
+                            //
+                        }
+                        
+                        case "ANSWER":
+                        {
+                            //kolla game, vilken stage vi är på i GAME
+                            //skicka nästa fråga samt svar
                         }
                         
                         case "SHUTDOWN":
