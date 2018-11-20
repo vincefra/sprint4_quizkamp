@@ -19,8 +19,8 @@ class ShowQuestionAction {
     public String pickedAnswer;
 }
 
-class ShowResultAction {
-    public String pickedAnswer;
-    public Player thisPlayer;
-    public Player opponent;
-}
+//class ShowResultAction {
+//    public String pickedAnswer;
+//    public Player thisPlayer;
+//    public Player opponent;
+//}

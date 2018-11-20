@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 
 public class Client {
 
@@ -17,7 +18,7 @@ public class Client {
         int port = 12345;
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("172.20.201.8");
+            ip = InetAddress.getByName("172.20.202.164");
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
@@ -32,9 +33,18 @@ public class Client {
             Scanner sc = new Scanner(System.in);
             String toSend;
 
+
+
             while (true) {
                 if ((receivedObject = objectIn.readObject()) != null) {
-                    System.out.println((String) receivedObject);
+
+                    if (receivedObject instanceof ShowResultAction) {
+                        ShowResultAction gotten = (ShowResultAction) receivedObject;
+                        System.out.println("Received: " + gotten.pickedAnswer);
+                        System.out.println("Received: " + gotten.thisPlayer);
+                        System.out.println("Received: " + gotten.opponent);
+                    }
+
                 }
                 System.out.println("Skriv något: ");
                 toSend = "CHAT-" + sc.nextLine();
