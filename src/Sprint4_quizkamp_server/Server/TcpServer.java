@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -46,7 +44,6 @@ public class TcpServer implements Runnable
 //        }
     }
 
-    
     public void setOpponent(TcpServer opponent) throws IOException 
     {
         this.opponent = opponent;
@@ -58,17 +55,21 @@ public class TcpServer implements Runnable
         objectOutgoing.writeObject(data);
     }
      
-   @Override
+    @Override
     public void run(){
 
         try ( 
             ObjectInputStream objectIncoming = new ObjectInputStream(clientSocket.getInputStream());
             ) 
         {          
+            
             String inputLine;
             while ((inputLine = (String)objectIncoming.readObject()) != null) 
             {   
-                System.out.println(inputLine.split("-")[0]);
+                
+                
+                
+                /*System.out.println(inputLine.split("-")[0]);
                 
                 //CHAT-fs fsd fds fsdfsd sdf
                 if (inputLine.length() > 1 && inputLine.contains("-"))
@@ -126,6 +127,7 @@ public class TcpServer implements Runnable
                   break;
                }
                System.out.print(inputLine);*/
+                
             }
         }
         catch (Exception e)
