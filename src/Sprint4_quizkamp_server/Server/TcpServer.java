@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,22 +17,25 @@ public class TcpServer implements Runnable
 {
     private Socket clientSocket;
     private Thread activity = new Thread(this);
+    
     TcpServer opponent;
     char mark;
-    ObjectOutputStream oos;
-    ObjectInputStream ois;
+
+    ObjectOutputStream objectOutgoing;
     
     public TcpServer(Socket clientSocket,char mark) throws IOException 
     {
         this.clientSocket = clientSocket;
         this.mark= mark;
+        objectOutgoing = new ObjectOutputStream(clientSocket.getOutputStream());
+        
         activity.start(); 
 //        try { 
-//            oos = new ObjectOutputStream(clientSocket.getOutputStream());
-//            ois = new ObjectInputStream(clientSocket.getInputStream());
+//            objectOutgoing = new ObjectOutputStream(clientSocket.getOutputStream());
+//            objectIncoming = new ObjectInputStream(clientSocket.getInputStream());
 //       
-//            oos.writeObject("Welcome");
-////            oos.writeObject("Welcome");
+//            objectOutgoing.writeObject("Welcome");
+////            objectOutgoing.writeObject("Welcome");
 //
 //        }    
 //        catch (Exception e)
@@ -43,31 +44,109 @@ public class TcpServer implements Runnable
 //        }
     }
 
+    public void setOpponent(TcpServer opponent) throws IOException 
+    {
+        this.opponent = opponent;
+        //sendToOpponent = (ObjectOutputStream)opponent.clientSocket.getOutputStream();
+    }
     
-     public void setOpponent(TcpServer opponent) {
-            this.opponent = opponent;
-        }
+    public void sendData(String data) throws IOException
+    {
+        objectOutgoing.writeObject(data);
+    }
      
-   @Override
+    @Override
     public void run(){
 
-        while (true)
-        {
+        try ( 
+            ObjectInputStream objectIncoming = new ObjectInputStream(clientSocket.getInputStream());
+            ) 
+        {          
             
+            String inputLine;
+            while ((inputLine = (String)objectIncoming.readObject()) != null) 
+            {   
+                
+                
+                
+                /*System.out.println(inputLine.split("-")[0]);
+                
+                //CHAT-fs fsd fds fsdfsd sdf
+                if (inputLine.length() > 1 && inputLine.contains("-"))
+                {
+                    switch (inputLine.split("-")[0])
+                    {
+                        case "CHAT":
+                        {
+                            if (opponent != null)
+                            {
+                                opponent.sendData(inputLine.split("-")[1]);
+                                //opponent.sendToOpponent.writeObject("Player" + this.mark + " skickade följande: " + inputLine.split("-")[1]);
+                                System.out.println("Player" + this.mark + " skickade följande: " + inputLine.split("-")[1]);
+                                continue;
+                            }
+                        }
+                        
+                        case "START":
+                        {
+                            if (opponent != null)
+                            {
+                                //SKAPA nytt game-object
+                                //SKICKA kategori till playert 1 game.generatecategory()
+                                //SKICKA vänta till player 2 game.wait()
+                            }
+                        }
+                        
+                        case "CATEGORY":
+                        {
+                            //SKICKA game.generatequestions(int catid) till player 1 i sträng
+                            //
+                        }
+                        
+                        case "ANSWER":
+                        {
+                            //kolla game, vilken stage vi är på i GAME
+                            //skicka nästa fråga samt svar
+                        }
+                        
+                        case "SHUTDOWN":
+                        {
+                            System.exit(0);
+                        }
+
+                        default:
+                            System.out.println(inputLine);
+                    }
+                }
+               /* 
+               if(inputLine.equalsIgnoreCase("Hej"))
+                   objectOutgoing.writeObject("Hello");
+               else if (inputLine.equalsIgnoreCase("Bye"))
+               {
+                  objectOutgoing.writeObject("Hej då");
+                  break;
+               }
+               System.out.print(inputLine);*/
+                
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 //        try {
-//            oos.writeObject("All players connected");
+//            objectOutgoing.writeObject("All players connected");
 ////            if(mark=='X')
-////                oos.writeObject("Start a new game?");
+////                objectOutgoing.writeObject("Start a new game?");
 //        
 //            
 //            ServerProtocol protocol= new ServerProtocol();
 //            String inputLine;
 //            
-//            oos.writeObject(protocol.processInput(null));
+//            objectOutgoing.writeObject(protocol.processInput(null));
 //            
-//            while ((inputLine = (String) ois.readObject()) != null) {          
-//               oos.writeObject(protocol.processInput(inputLine));
+//            while ((inputLine = (String) objectIncoming.readObject()) != null) {          
+//               objectOutgoing.writeObject(protocol.processInput(inputLine));
 //            }
 //       } catch (IOException ex) {
 //            Logger.getLogger(TcpServer.class.getName()).log(Level.SEVERE, null, ex);
