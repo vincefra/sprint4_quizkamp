@@ -6,8 +6,7 @@ import java.awt.event.ActionListener;
 public class Main implements ActionListener {
 
     public static void main(String[] args) {
-        Client client = new Client();
-        
+        Client.Init();
     }
     
     public void actionPerformed(ActionEvent e) {
