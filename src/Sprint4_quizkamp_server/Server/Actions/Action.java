@@ -11,7 +11,7 @@ public class Action {
 
 class ShowCategoriesAction {
     public ArrayList<String> categories;
-    public int chosenCategory;
+    public String chosenCategory;
 }
 
 class ShowQuestionAction {

@@ -1,5 +1,9 @@
 package Sprint4_quizkamp_server.Client;
 
+import Sprint4_quizkamp_server.Server.Actions.Action;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -20,7 +24,9 @@ public class Client {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
         }
-
+        
+        
+        
         //Try connecting to server
         try (Socket socketToServer = new Socket(ip, port);
              ObjectOutputStream objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
@@ -30,7 +36,10 @@ public class Client {
 
             //when receiving an object, add it to an arraylist
             while ((receivedObject = objectIn.readObject()) != null) {
-                    myReceivedObjects.add(receivedObject);
+    
+                obejctRecivedFromServer(receivedObject);
+                
+                myReceivedObjects.add(receivedObject);
             }
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Kunde inte ansluta.");
@@ -41,4 +50,13 @@ public class Client {
             System.out.println("Client: Received object: " + o);
         }
     }
+    
+    private void obejctRecivedFromServer(Object o) {
+        
+        if (o instanceof Action)
+        
+        
+    }
+    
+    
 }
