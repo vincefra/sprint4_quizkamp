@@ -1,6 +1,7 @@
 package Sprint4_quizkamp_server.Client;
 
 import Sprint4_quizkamp_server.Server.Actions.Action;
+import Sprint4_quizkamp_server.Server.Server;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,11 +19,9 @@ public class Client {
     public static void Init() {
 
         //Create ip/port-variables and an arraylist for storing received objects
-        ArrayList<Object> myReceivedObjects = new ArrayList<>();
-        int port = 12345;
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("172.20.202.46");
+            ip = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
@@ -31,10 +30,12 @@ public class Client {
         
         //Try connecting to server
         try {
-            Socket socketToServer = new Socket(ip, port);
+            Socket socketToServer = new Socket(ip, Server.SERVER_PORT);
             objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             objectIn = new ObjectInputStream(socketToServer.getInputStream());
     
+            sendToServer("hej");
+            
             Object receivedObject;
             
             receivedObject = objectIn.readObject();
