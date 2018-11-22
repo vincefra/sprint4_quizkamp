@@ -10,6 +10,7 @@ public class ResultPanel extends JPanel {
     public ResultPanel() {
         setLayout(new BorderLayout());
         resultLabel.setFont(new Font("Serif", Font.BOLD, 38));
+        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(resultLabel, BorderLayout.CENTER);
     }
 

@@ -10,6 +10,7 @@ public class QuestionPanel extends JPanel {
     public QuestionPanel() {
         setLayout(new BorderLayout());
         questionLabel.setFont(new Font("Serif", Font.BOLD, 38));
+        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(questionLabel, BorderLayout.CENTER);
     }
 

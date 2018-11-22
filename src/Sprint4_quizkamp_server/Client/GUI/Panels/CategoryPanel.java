@@ -10,6 +10,7 @@ public class CategoryPanel extends JPanel {
     public CategoryPanel() {
         setLayout(new BorderLayout());
         categoryLabel.setFont(new Font("Serif", Font.BOLD, 38));
+        categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(categoryLabel, BorderLayout.CENTER);
     }
 

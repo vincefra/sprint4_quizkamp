@@ -16,9 +16,9 @@ public class GuiController {
         //Behövs inte?
     }
 
-    public static void ShowCategoriesWindow() {
+    public static void ShowCategoriesWindow() { //Skickar in objektet i denna metod
         gui.getContentPane().removeAll();
-        gui.getContentPane().add(new CategoryPanel());
+        gui.getContentPane().add(new CategoryPanel()); //Objektet skickas sedan in som parameter i konstruktorn, för att datan ska nå knappar etc?
         gui.revalidate();
         gui.repaint();
     }
