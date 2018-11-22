@@ -47,8 +47,11 @@ public class Client {
     }
     
     public static void sendToServer(Object o) {
-    
+        try {
+            objectOut.writeObject(o);
+        } catch (Exception e) {
         
+        }
     }
     
     private static void objectRecivedFromServer(Object o) {
