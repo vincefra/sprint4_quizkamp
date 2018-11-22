@@ -1,53 +1,63 @@
 package Sprint4_quizkamp_server.Client;
 
+import Sprint4_quizkamp_server.Server.Server;
 
-import java.io.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Client {
 
-    public Client() {
+    private static ObjectOutputStream objectOut;
+    private static ObjectInputStream objectIn;
+
+    public static void Init() {
 
         //Create ip/port-variables and an arraylist for storing received objects
-        ArrayList<Object> myReceivedObjects = new ArrayList<>();
-        int port = 12345;
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("172.20.201.8");
+            ip = InetAddress.getLocalHost();
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
         }
 
+
         //Try connecting to server
-        try (Socket socketToServer = new Socket(ip, port);
-             ObjectOutputStream objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
-             ObjectInputStream objectIn = new ObjectInputStream(socketToServer.getInputStream())) {
+        try {
+            Socket socketToServer = new Socket(ip, Server.SERVER_PORT);
+            objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
+            objectIn = new ObjectInputStream(socketToServer.getInputStream());
 
+            sendToServer("hej");
+            
             Object receivedObject;
-            Scanner sc = new Scanner(System.in);
-            String toSend;
 
-            while (true) {
-                if ((receivedObject = objectIn.readObject()) != null) {
-                    System.out.println((String) receivedObject);
-                }
-                System.out.println("Skriv något: ");
-                toSend = "CHAT-" + sc.nextLine();
-                objectOut.writeObject(toSend);
+            receivedObject = objectIn.readObject();
+            while (receivedObject != null) {
+                objectRecivedFromServer(receivedObject);
+                receivedObject = objectIn.readObject();
             }
 
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Connection error.");
-            e.printStackTrace();
+        } catch (Exception e) {
         }
-        //Print all objects from list of received objects
-//        for (Object o : myReceivedObjects) {
-//            System.out.println("Client: Received object: " + o);
-//        }
     }
+
+    public static void sendToServer(Object o) {
+        try {
+            objectOut.writeObject(o);
+        } catch (Exception e) {
+
+        }
+    }
+
+    private static void objectRecivedFromServer(Object o) {
+
+        System.out.println(o);
+        
+    }
+
+
 }
