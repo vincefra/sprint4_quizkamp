@@ -1,5 +1,7 @@
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 
+import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,9 +15,11 @@ public class CategoryPanel extends JPanel implements ActionListener {
     private JButton cat1Button = new JButton("Djur");
     private JButton cat2Button = new JButton("Mat");
     private JButton cat3Button = new JButton("Politik");
+    private ShowCategoriesAction action;
 
 
-    public CategoryPanel() {
+    public CategoryPanel(ShowCategoriesAction action) {
+        this.action = action;
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
         categoryLabel.setFont(new Font("Serif", Font.BOLD, 38));
@@ -31,9 +35,9 @@ public class CategoryPanel extends JPanel implements ActionListener {
         cat2Button.addActionListener(this::actionPerformed);
         cat3Button.addActionListener(this::actionPerformed);
 
-//        cat1Button.setText((String) cats.get(0));
-//        cat2Button.setText((String) cats.get(1));
-//        cat3Button.setText((String) cats.get(2));
+        cat1Button.setText(action.categories.get(0));
+        cat2Button.setText(action.categories.get(1));
+        cat3Button.setText(action.categories.get(2));
 
         categoryPanel.setLayout(new FlowLayout());
         categoryPanel.add(cat1Button);
@@ -46,7 +50,7 @@ public class CategoryPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
         String pickedCategory = clickedButton.getText();
-        //Lägg till pickedCategory i objektet
+        action.chosenCategory = clickedButton.getText();
         //Skicka objektet till server
         System.out.println(pickedCategory);
     }

@@ -1,5 +1,7 @@
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 
+import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,10 +15,20 @@ public class QuestionPanel extends JPanel implements ActionListener {
     private JButton answer2Button = new JButton("Svar 2");
     private JButton answer3Button = new JButton("Svar 3");
     private JButton answer4Button = new JButton("Svar 4");
+    private ShowQuestionAction action;
+    private String[] answers;
 
-    public QuestionPanel() {
+    public QuestionPanel(ShowQuestionAction action) {
+        this.action = action;
+        this.answers = action.question.getAnswers(true);
+
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
+        questionLabel.setText(action.question.getQuestion());
+        answer1Button.setText(answers[0]);
+        answer2Button.setText(answers[1]);
+        answer3Button.setText(answers[2]);
+        answer4Button.setText(answers[3]);
         questionLabel.setFont(new Font("Serif", Font.BOLD, 28));
         questionLabel.setForeground(new Color(255, 255, 255));
         questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,8 +54,21 @@ public class QuestionPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton) e.getSource();
         String pickedAnswer = clickedButton.getText();
-        //Lägg till pickedAnswer i objektet
-        //Skicka objektet till server
+        action.pickedAnswer = pickedAnswer;
+        if (answer1Button.getText().equalsIgnoreCase(action.question.getCorrectAnswer())) {
+            clickedButton.setForeground(Color.RED);
+            answer1Button.setForeground(Color.GREEN);
+        }else if (answer2Button.getText().equalsIgnoreCase(action.question.getCorrectAnswer())) {
+            clickedButton.setForeground(Color.RED);
+            answer2Button.setForeground(Color.GREEN);
+        }else if (answer3Button.getText().equalsIgnoreCase(action.question.getCorrectAnswer())) {
+            clickedButton.setForeground(Color.RED);
+            answer3Button.setForeground(Color.GREEN);
+        }else{
+            clickedButton.setForeground(Color.RED);
+            answer4Button.setForeground(Color.GREEN);
+        }
+            //Skicka objektet till server
         System.out.println(pickedAnswer);
     }
 }
