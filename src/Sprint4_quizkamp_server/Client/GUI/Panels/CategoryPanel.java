@@ -17,22 +17,30 @@ public class CategoryPanel extends JPanel implements ActionListener {
 
     public CategoryPanel(List cats) {
 //        Category categoryObject = (Category) o;
+        setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
         categoryLabel.setFont(new Font("Serif", Font.BOLD, 38));
         categoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(categoryLabel, BorderLayout.PAGE_START);
+        categoryLabel.setForeground(new Color(255, 255, 255));
+        add(categoryLabel, BorderLayout.CENTER);
+
+        cat1Button.setPreferredSize(new Dimension(160, 50));
+        cat2Button.setPreferredSize(new Dimension(160, 50));
+        cat3Button.setPreferredSize(new Dimension(160, 50));
+
         cat1Button.addActionListener(this::actionPerformed);
         cat2Button.addActionListener(this::actionPerformed);
         cat3Button.addActionListener(this::actionPerformed);
+
         cat1Button.setText((String) cats.get(0));
         cat2Button.setText((String) cats.get(1));
         cat3Button.setText((String) cats.get(2));
 
-        categoryPanel.setLayout(new GridLayout());
+        categoryPanel.setLayout(new FlowLayout());
         categoryPanel.add(cat1Button);
         categoryPanel.add(cat2Button);
         categoryPanel.add(cat3Button);
-        add(categoryPanel, BorderLayout.CENTER);
+        add(categoryPanel, BorderLayout.PAGE_END);
     }
 
     @Override

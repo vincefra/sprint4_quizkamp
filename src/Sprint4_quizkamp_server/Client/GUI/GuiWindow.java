@@ -23,7 +23,9 @@ public class GuiWindow extends JFrame {
         setMinimumSize(new Dimension(700, 500));
         setMaximumSize(new Dimension(700, 500));
         root.setLayout(new BorderLayout());
+        root.setBackground(new Color(0, 0, 55));
         kampenLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        kampenLabel.setForeground(new Color(255, 255, 255));
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         kampenLabel.setFont(new Font("Serif", Font.BOLD, 38));
         splitBottom.setLayout(new GridLayout(0, 3));
