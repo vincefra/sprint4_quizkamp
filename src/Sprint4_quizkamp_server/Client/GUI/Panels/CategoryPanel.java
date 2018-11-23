@@ -15,8 +15,7 @@ public class CategoryPanel extends JPanel implements ActionListener {
     private JButton cat3Button = new JButton("Politik");
 
 
-    public CategoryPanel(List cats) {
-//        Category categoryObject = (Category) o;
+    public CategoryPanel() {
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
         categoryLabel.setFont(new Font("Serif", Font.BOLD, 38));
@@ -32,9 +31,9 @@ public class CategoryPanel extends JPanel implements ActionListener {
         cat2Button.addActionListener(this::actionPerformed);
         cat3Button.addActionListener(this::actionPerformed);
 
-        cat1Button.setText((String) cats.get(0));
-        cat2Button.setText((String) cats.get(1));
-        cat3Button.setText((String) cats.get(2));
+//        cat1Button.setText((String) cats.get(0));
+//        cat2Button.setText((String) cats.get(1));
+//        cat3Button.setText((String) cats.get(2));
 
         categoryPanel.setLayout(new FlowLayout());
         categoryPanel.add(cat1Button);

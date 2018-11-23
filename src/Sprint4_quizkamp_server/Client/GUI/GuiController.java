@@ -20,9 +20,8 @@ public class GuiController {
     }
 
     public static void ShowCategoriesWindow() { //Skickar in objektet i denna metod
-        List<String> cats = Arrays.asList("Buenos Aires", "Córdoba", "La Plata");
         gui.getContentPane().removeAll();
-        gui.getContentPane().add(new CategoryPanel(cats)); //Objektet skickas sedan in som parameter i konstruktorn, för att datan ska nå knappar etc?
+        gui.getContentPane().add(new CategoryPanel()); //Objektet skickas sedan in som parameter i konstruktorn, för att datan ska nå knappar etc?
         gui.revalidate();
         gui.repaint();
     }
