@@ -9,18 +9,8 @@ public class Action {
 
 }
 
-class ShowCategoriesAction {
-    public ArrayList<String> categories;
-    public String chosenCategory;
-}
 
-class ShowQuestionAction {
-    public Question question;
-    public String pickedAnswer;
-}
 
-class ShowResultAction {
-    public String pickedAnswer;
-    public Player thisPlayer;
-    public Player opponent;
-}
+
+
+
