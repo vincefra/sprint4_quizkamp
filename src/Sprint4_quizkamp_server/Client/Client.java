@@ -37,7 +37,6 @@ public class Client {
             sendToServer("hej");
             
             Object receivedObject;
-            
             receivedObject = objectIn.readObject();
             while (receivedObject != null) {
                 objectRecivedFromServer(receivedObject);
@@ -56,8 +55,6 @@ public class Client {
     }
     
     private static void objectRecivedFromServer(Object o) {
-    
-        System.out.println(o);
         
     }
     

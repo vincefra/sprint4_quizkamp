@@ -2,6 +2,7 @@ package Sprint4_quizkamp_server.Server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,11 +17,13 @@ public class Server {
     private static ServerSocket serverSocket;
     
     public static void main(String[] args) {
-        Server.init();
+        init();
     }
     
     public static void init() {
     
+        // Läs in frågorna.
+        QuestionsHandler.init();
         
         try {
             serverSocket = new ServerSocket(SERVER_PORT);
@@ -31,10 +34,20 @@ public class Server {
                 
             }
         } catch (Exception e) {
-        
+            System.out.println("fel");
         }
         
     
+    }
+    
+    public static void sendObject(ObjectOutputStream outputStream, Object objectToSend) {
+        try {
+            outputStream.writeObject(objectToSend);
+        } catch (Exception e) {
+            System.out.println("SERVER: fel vid skickning");
+        }
+        
+        
     }
     
     

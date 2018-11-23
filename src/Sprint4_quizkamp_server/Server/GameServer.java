@@ -9,8 +9,8 @@ public class GameServer {
     // Kallas på när en ny klient ansluter.
     public static void clientConnected(Socket newConnection) {
     
-        System.out.println(newConnection);
-        Player newPlayer = new Player();
+        System.out.println("Ny connection: " + newConnection.toString() + " " + newConnection.getInetAddress().toString());
+        Player newPlayer;
         
         
         // Om det inte finns något spel öppet så skapar vi ett.
@@ -20,14 +20,18 @@ public class GameServer {
         
         if (gameWaitingForPlayers.player1 == null) {
             // Detta får bli Player 1.
-            gameWaitingForPlayers.player1 = newPlayer;
+            gameWaitingForPlayers.player1 = new Player(newConnection, gameWaitingForPlayers);
         }
         else if (gameWaitingForPlayers.player2 == null) {
             // Detta får bli Player 2.
-            gameWaitingForPlayers.player2 = newPlayer;
+            gameWaitingForPlayers.player2 = new Player(newConnection, gameWaitingForPlayers);
         }
         
+        gameWaitingForPlayers.startGame(); // Starta spelet.
         
+        if (gameWaitingForPlayers.isFull()) {
+            gameWaitingForPlayers = null;
+        }
         
         
     }
