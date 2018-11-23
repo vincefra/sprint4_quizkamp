@@ -37,8 +37,10 @@ public class Client {
             sendToServer("hej");
             
             Object receivedObject;
-            
+            System.out.println("innan");
             receivedObject = objectIn.readObject();
+            System.out.println("hejhejhej");
+            System.out.println("Klient har tagit emot: " + receivedObject.toString());
             while (receivedObject != null) {
                 objectRecivedFromServer(receivedObject);
                 receivedObject = objectIn.readObject();

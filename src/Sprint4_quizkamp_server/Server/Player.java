@@ -1,25 +1,42 @@
 package Sprint4_quizkamp_server.Server;
 
+import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class Player extends Thread {
     
     public Socket socket;
     private Game game;
+    private ObjectInputStream inputStream;
+    public ObjectOutputStream outputStream;
     
-    public Player() {
     
+    public Player(Socket socket, Game game) {
+        this.socket = socket;
+        this.game = game;
+        
+        try {
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException e) { }
+        
+        start(); // Starta tråden.
     }
     
-    public void setGame(Game g) {
-        this.game = g;
+    private void Run() {
+        checkForMessages();
     }
-
-    public void showCategoriesWindow() {
-        ArrayList<Category> categories = QuestionsHandler.getCategories();
-        
-        
+    
+    private void checkForMessages() {
+        try {
+            while (true) {
+                // kolla efter medd.
+                Object objectRecived = inputStream.readObject();
+                game.messageRecivedFromPlayer(objectRecived, this);
+            }
+        } catch (Exception e) {
+            System.out.println("FEL");
+        }
         
     }
 

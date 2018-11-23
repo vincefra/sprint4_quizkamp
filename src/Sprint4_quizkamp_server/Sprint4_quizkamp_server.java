@@ -11,13 +11,6 @@ public class Sprint4_quizkamp_server {
     private static Random randomObject = new Random();
     
     public static void main(String[] args) {
-       
-        // Skapa frågorna.
-        QuestionsHandler.ReadQuestions();
-    
-        Question[] questions = QuestionsHandler.GetQuestions(0, 2, false);
-        WriteQuestions(questions);
-       
         
     }
     

@@ -15,11 +15,30 @@ import java.util.List;
 public class QuestionsHandler {
 
     // TODO: ändra till relativ sökväg.
-    private static final String questionPath = "C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Frågor";
+    private static final String questionPath = "C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
     private static ArrayList<Category> categories;
     
     public static ArrayList<Category> getCategories() {
         return categories;
+    }
+    
+    // Läser in alla frågor och kategorier från hårddisken.
+    public static void init() {
+        categories = new ArrayList<>();
+        
+        // Hämta alla filer/kategorier.
+        File folder = new File(questionPath);
+        File[] files = folder.listFiles();
+        
+        for (File file : files) {
+            // Skapar kategorin.
+            String categoryName = removeFileExtension(file);
+            Category category = new Category(categoryName);
+            categories.add(category);
+            
+            // Läser in frågorna från filen.
+            category.questions = getQuestionsFromFile(file);
+        }
     }
     
     public static Question[] GetQuestions(int categoryNum, int numberOfQuestions,
@@ -47,25 +66,6 @@ public class QuestionsHandler {
         }
         
         return questionsToReturn;
-    }
-    
-    // Läser in alla frågor och kategorier från hårddisken.
-    public static void ReadQuestions() {
-        categories = new ArrayList<>();
-        
-        // Hämta alla filer/kategorier.
-        File folder = new File(questionPath);
-        File[] files = folder.listFiles();
-    
-        for (File file : files) {
-            // Skapar kategorin.
-            String categoryName = removeFileExtension(file);
-            Category category = new Category(categoryName);
-            categories.add(category);
-    
-            // Läser in frågorna från filen.
-            category.questions = getQuestionsFromFile(file);
-        }
     }
     
     private static ArrayList<Question> getQuestionsFromFile(File file) {
