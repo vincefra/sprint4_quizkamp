@@ -9,6 +9,8 @@ public class Game {
         return player1 != null && player2 != null;
     }
     
-    
+    public void startGame() {
+        player1.showCategoriesWindow();
+    }
     
 }

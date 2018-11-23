@@ -9,7 +9,7 @@ public class GameServer {
     // Kallas på när en ny klient ansluter.
     public static void clientConnected(Socket newConnection) {
     
-        System.out.println(newConnection);
+        System.out.println("Ny connection: " + newConnection.toString() + " " + newConnection.getInetAddress().toString());
         Player newPlayer = new Player();
         
         
@@ -27,7 +27,12 @@ public class GameServer {
             gameWaitingForPlayers.player2 = newPlayer;
         }
         
+        newPlayer.setGame(gameWaitingForPlayers);
+        gameWaitingForPlayers.startGame(); // Starta spelet.
         
+        if (gameWaitingForPlayers.isFull()) {
+            gameWaitingForPlayers = null;
+        }
         
         
     }
