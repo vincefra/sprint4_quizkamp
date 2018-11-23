@@ -29,7 +29,7 @@ public class Game {
     }
     
     public void messageRecivedFromPlayer(Object message, Player from) {
-        System.out.println(message + " FROM " + from);
+        System.out.println("SERVER tagit emot meddelande/objekt: " + message + " FROM " + from);
     }
     
 }
