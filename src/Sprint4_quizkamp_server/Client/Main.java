@@ -1,13 +1,8 @@
 package Sprint4_quizkamp_server.Client;
 import Sprint4_quizkamp_server.Client.GUI.GuiController;
-import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
-import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
+import Sprint4_quizkamp_server.Server.Actions.*;
 import Sprint4_quizkamp_server.Server.Question;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class Main {
 

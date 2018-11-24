@@ -1,15 +1,14 @@
 package Sprint4_quizkamp_server.Client;
 
-import Sprint4_quizkamp_server.Server.Actions.Action;
+import Sprint4_quizkamp_server.Client.GUI.GuiController;
+import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import Sprint4_quizkamp_server.Server.Server;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 public class Client {
     
@@ -50,12 +49,21 @@ public class Client {
         try {
             objectOut.writeObject(o);
         } catch (Exception e) {
-        
+            e.printStackTrace();
         }
     }
     
     private static void objectRecivedFromServer(Object o) {
-        
+        if (o instanceof ShowCategoriesAction) {
+            GuiController.ShowCategoriesWindow((ShowCategoriesAction) o);
+        } else if (o instanceof ShowQuestionAction) {
+            GuiController.ShowQuestionWindow((ShowQuestionAction) o);
+        } else if (o instanceof ShowResultAction) {
+            GuiController.ShowResultWindow();
+        } else {
+            throw new IllegalArgumentException();
+        }
+
     }
     
     

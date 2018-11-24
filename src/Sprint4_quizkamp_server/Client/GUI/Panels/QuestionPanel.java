@@ -1,11 +1,13 @@
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 
+import Sprint4_quizkamp_server.Client.Client;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import jdk.nashorn.api.tree.BreakTree;
 
 public class QuestionPanel extends JPanel implements ActionListener {
 
@@ -68,7 +70,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
             clickedButton.setForeground(Color.RED);
             answer4Button.setForeground(Color.GREEN);
         }
-            //Skicka objektet till server
+            Client.sendToServer(action);
         System.out.println(pickedAnswer);
     }
 }

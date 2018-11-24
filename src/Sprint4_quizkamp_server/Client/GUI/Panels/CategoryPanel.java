@@ -1,5 +1,6 @@
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 
+import Sprint4_quizkamp_server.Client.Client;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 
 import javax.swing.*;
@@ -51,7 +52,7 @@ public class CategoryPanel extends JPanel implements ActionListener {
         JButton clickedButton = (JButton) e.getSource();
         String pickedCategory = clickedButton.getText();
         action.chosenCategory = clickedButton.getText();
-        //Skicka objektet till server
+        Client.sendToServer(action);
         System.out.println(pickedCategory);
     }
 }
