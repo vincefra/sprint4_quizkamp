@@ -38,6 +38,8 @@ public class Server {
             }
         } catch (Exception e) {
             System.out.println("fel");
+            System.out.println(e);
+            e.printStackTrace();
         }
     }
     

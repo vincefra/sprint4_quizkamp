@@ -84,7 +84,8 @@ public class QuestionPanel extends JPanel implements ActionListener {
             clickedButton.setForeground(Color.RED);
             answer4Button.setForeground(Color.GREEN);
         }
-            Client.sendToServer(action);
+        action.questionNumber += 1;
+        Client.sendToServer(action);
         System.out.println(pickedAnswer);
     }
     
