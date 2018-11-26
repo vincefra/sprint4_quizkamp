@@ -32,17 +32,21 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
+        questionLabel.setPreferredSize(new Dimension(700,250));
         questionLabel.setIcon(backIcon);
         questionLabel.setText(action.question.getQuestion());
-
+        questionLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
+        questionLabel.setForeground(Color.YELLOW);
+        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        questionLabel.setHorizontalTextPosition(JLabel.CENTER);
+        questionLabel.setVerticalTextPosition(JLabel.CENTER);
+        add(questionLabel, BorderLayout.NORTH);
+        
         answer1Button.setText(answers[0]);
         answer2Button.setText(answers[1]);
         answer3Button.setText(answers[2]);
         answer4Button.setText(answers[3]);
-        questionLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
-        questionLabel.setForeground(Color.YELLOW);
-        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(questionLabel, BorderLayout.NORTH);
+        
         
         answer1Button.addActionListener(this::actionPerformed);
         answer2Button.addActionListener(this::actionPerformed);

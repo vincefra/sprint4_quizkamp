@@ -29,10 +29,12 @@ public class GuiWindow extends JFrame {
         root.setLayout(new BorderLayout());
         root.setBackground(new Color(0, 0, 55));
         kampenLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        kampenLabel.setForeground(Color.RED);
+        kampenLabel.setForeground(Color.yellow);
         kampenLabel.setIcon(backIcon);
         nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
         kampenLabel.setFont(new Font("SansSerif", Font.BOLD, 34));
+        kampenLabel.setHorizontalTextPosition(JLabel.CENTER);
+        kampenLabel.setVerticalTextPosition(JLabel.CENTER);
         splitBottom.setLayout(new GridLayout(0, 3,5,5));
         root.add(kampenLabel, BorderLayout.CENTER);
         nameLabel.setPreferredSize(new Dimension(60, 50));
@@ -42,12 +44,6 @@ public class GuiWindow extends JFrame {
         nameLabel.setForeground(Color.WHITE);
         nameLabel.setBackground(new Color(96,165,191));
         nameTextField.setPreferredSize(new Dimension(160, 50));
-//        playButton.setPreferredSize(new Dimension(100, 60));
-//        playButton.setBackground(new Color(96,165,191));
-//        playButton.setFont(font);
-//        playButton.setBorderPainted(false);
-//        playButton.setOpaque(true);
-//        playButton.setBorder(BorderFactory.createEtchedBorder(1));
 
         splitBottom.add(nameLabel);
         splitBottom.add(nameTextField);
