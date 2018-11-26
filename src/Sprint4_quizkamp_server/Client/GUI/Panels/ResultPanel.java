@@ -6,25 +6,69 @@ import java.awt.*;
 public class ResultPanel extends JPanel {
 
     private JLabel resultLabel = new JLabel("Resultat");
-    private JLabel player1Label = new JLabel("Player 1: 2/3");
-    private JLabel player2Label = new JLabel("Player 2: 0/3");
+    private JLabel player1Label = new JLabel("Player 1");
+    private JLabel player2Label = new JLabel("Player 2");
+    private JLabel rond1Label= new JLabel("ROND 1");
+    private JLabel rond2Label= new JLabel("ROND 2");
+    private JLabel play1score1= new JLabel("Score 1");
+    private JLabel play2score1= new JLabel("Score 1");
+    private JLabel play1score2= new JLabel("Score 2");
+    private JLabel play2score2= new JLabel("Score 2");
+    private JButton geUppButton= new JButton("Ge upp");
+//    private JButton spelaButton= new JButton("SPELA");
+    private JPanel recordPanel= new JPanel();
+    private JPanel buttonPanel= new JPanel();
+    private Font font1= new Font("SansSerif", Font.PLAIN, 25);
+    private Font font2= new Font("SansSerif", Font.BOLD, 30);
+    JButton spelaButton= new MyJButton("SPELA",MyJButton.sky);
 
     public ResultPanel() {
         setLayout(new BorderLayout());
-        setBackground(new Color(0, 0, 55));
-        resultLabel.setFont(new Font("Serif", Font.BOLD, 48));
-        resultLabel.setForeground(new Color(255, 255, 255));
-        resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        player1Label.setFont(new Font("Serif", Font.BOLD, 28));
-        player1Label.setForeground(new Color(255, 255, 255));
-        player1Label.setHorizontalAlignment(SwingConstants.CENTER);
-        player2Label.setFont(new Font("Serif", Font.BOLD, 28));
-        player2Label.setForeground(new Color(255, 255, 255));
-        player2Label.setHorizontalAlignment(SwingConstants.CENTER);
-        add(resultLabel, BorderLayout.CENTER);
-        add(player1Label, BorderLayout.PAGE_START);
-        add(player2Label, BorderLayout.PAGE_END);
+        add(recordPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+        recordPanel.setLayout(new GridLayout(3, 3, 4, 4));
+        buttonPanel.setLayout(new FlowLayout());
+        
+        recordPanel.setBackground(new Color(96,165,191));
+        buttonPanel.setBackground(new Color(96,165,191));
+        setLabelStyle(player1Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(player2Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(resultLabel, font2, Color.YELLOW, SwingConstants.CENTER);
+        setLabelStyle(play1score1, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(play1score2, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(rond1Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(rond2Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(play2score1, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(play2score2, font1, Color.WHITE, SwingConstants.CENTER);
 
+//        spelaButton.setPreferredSize(new Dimension(100,40));
+//        spelaButton.setBackground(new Color(96,165,191));
+//        spelaButton.setBorderPainted(false);
+//        spelaButton.setOpaque(true);
+//        spelaButton.setForeground(Color.white);
+//        spelaButton.setBorder(BorderFactory.createEtchedBorder());
+//        spelaButton.setFont(font1);
+     
+        recordPanel.add(player1Label);
+        recordPanel.add(resultLabel);
+        recordPanel.add(player2Label);
+        recordPanel.add(play1score1);
+        recordPanel.add(rond1Label);
+        recordPanel.add(play2score1);
+        recordPanel.add(play1score2);
+        recordPanel.add(rond2Label);
+        recordPanel.add(play2score2);
+        buttonPanel.add(spelaButton);
+        buttonPanel.add(geUppButton);
+         
+        
+
+    }
+    
+    public void setLabelStyle(JLabel label,Font font,Color color,int alignment){
+        label.setFont(font);
+        label.setForeground(color);
+        label.setHorizontalAlignment(alignment);      
     }
 
 }
