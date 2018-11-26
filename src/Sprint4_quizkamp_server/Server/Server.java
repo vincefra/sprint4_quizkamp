@@ -9,7 +9,7 @@ import java.net.Socket;
 
 public class Server {
     
-    public static final int SERVER_PORT = 12345;
+    public static final int SERVER_PORT = 12346;
     
     private static ObjectOutputStream objectOut;
     private static ObjectInputStream objectIn;
@@ -35,6 +35,8 @@ public class Server {
             }
         } catch (Exception e) {
             System.out.println("fel");
+            System.out.println(e);
+            e.printStackTrace();
         }
         
     

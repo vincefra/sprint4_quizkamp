@@ -54,18 +54,21 @@ public class Game {
     {
         ShowQuestionAction q;
         currentQuestions = QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
-        q.question = currentQuestions[q.questionNumber];
+        //q.question = currentQuestions[q.questionNumber];
         
         
-        Server.sendObject(p.outputStream, q);
+        //Server.sendObject(p.outputStream, q);
         
     }
     
     private void showCategoriesSend(Player p)
     {
         ArrayList<Category> categories = QuestionsHandler.getCategories();
+        System.out.println(categories.get(0));
+        System.out.println(categories.get(1));
+        System.out.println(categories.get(2));
         ShowCategoriesAction c = new ShowCategoriesAction();
-        
+        c.categories = new ArrayList<>();
         for (Category temp : categories)
             c.categories.add(temp.name);
         

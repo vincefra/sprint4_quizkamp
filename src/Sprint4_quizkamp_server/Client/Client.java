@@ -20,7 +20,7 @@ public class Client {
         //Create ip/port-variables and an arraylist for storing received objects
         InetAddress ip = null;
         try {
-            ip = InetAddress.getLocalHost();
+            ip = InetAddress.getByName("172.20.201.229");
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
@@ -33,7 +33,7 @@ public class Client {
             objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             objectIn = new ObjectInputStream(socketToServer.getInputStream());
     
-            sendToServer("hej");
+//            sendToServer("hej");
             
             Object receivedObject;
             receivedObject = objectIn.readObject();
@@ -48,7 +48,9 @@ public class Client {
     
     public static void sendToServer(Object o) {
         try {
+            System.out.println("inuti sendtoserver");
             objectOut.writeObject(o);
+            System.out.println("efter skickat");
         } catch (Exception e) {
             e.printStackTrace();
         }
