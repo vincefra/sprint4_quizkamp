@@ -41,6 +41,14 @@ public class QuestionsHandler {
         }
     }
     
+    public static int GetCategoryNum(String category)
+    {
+        for (int x = 0; x < getCategories().size() - 1; x++)
+            if (getCategories().get(x).name.equalsIgnoreCase(category))
+                return x;
+        return 0;
+    }
+    
     public static Question[] GetQuestions(int categoryNum, int numberOfQuestions,
         boolean remove) {
         Category category = categories.get(categoryNum);

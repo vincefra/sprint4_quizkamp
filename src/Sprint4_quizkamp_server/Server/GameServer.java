@@ -8,33 +8,31 @@ public class GameServer {
     
     // Kallas på när en ny klient ansluter.
     public static void clientConnected(Socket newConnection) {
-    
-        
-        Player newPlayer;
         
         
         // Om det inte finns något spel öppet så skapar vi ett.
         if (gameWaitingForPlayers == null) {
             gameWaitingForPlayers = new Game();
-        }
-        
-        if (gameWaitingForPlayers.player1 == null) {
-            // Detta får bli Player 1.
+            
             gameWaitingForPlayers.player1 = new Player(newConnection, gameWaitingForPlayers);
+            
+            //lagra game i player1
+            gameWaitingForPlayers.player1.setGame(gameWaitingForPlayers);
             System.out.println("player 1 har anslutit");
             gameWaitingForPlayers.startGame(); // Starta spelet.
         }
         else if (gameWaitingForPlayers.player2 == null) {
             // Detta får bli Player 2.
             gameWaitingForPlayers.player2 = new Player(newConnection, gameWaitingForPlayers);
+            
+            //lagra game i player2
+            gameWaitingForPlayers.player2.setGame(gameWaitingForPlayers);
             System.out.println("player 2 har anslutit");
         }
         
         if (gameWaitingForPlayers.isFull()) {
             gameWaitingForPlayers = null;
-        }
-        
-        
+        }   
     }
     
     public static void objectRecivedFromClient(Object o) {

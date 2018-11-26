@@ -27,6 +27,12 @@ public class Player extends Thread {
         checkForMessages();
     }
     
+    //publik metod som sätter game till spelare
+    public void setGame(Game game)
+    {
+        this.game = game;
+    }
+    
     private void checkForMessages() {
         try {
             while (true) {
