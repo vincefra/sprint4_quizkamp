@@ -1,8 +1,8 @@
 package Sprint4_quizkamp_server.Server;
 
 import Sprint4_quizkamp_server.Sprint4_quizkamp_server;
-
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +12,7 @@ public class Question implements Serializable {
     private String question;
     private String[] answers;
     private static final long serialVersionUID = 1l;
+    
     
     public String getQuestion() {
         return question;

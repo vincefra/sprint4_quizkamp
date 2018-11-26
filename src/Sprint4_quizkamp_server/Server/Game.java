@@ -12,6 +12,7 @@ public class Game {
     
     public Player player1;
     public Player player2;
+    
     private Question[] currentQuestions;
     
     int numQuestions, numRounds;
@@ -21,12 +22,11 @@ public class Game {
     }
     
     public void startGame() {
-
         //Läser in properties för antal rundor/frågor
         Properties p = new Properties();
 
         try {
-            p.load(new FileInputStream("src\\Sprint4_quizkamp_server\\Server\\GameProperties.properties"));
+            p.load(new FileInputStream("src/Sprint4_quizkamp_server/Server/GameProperties.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,38 +40,33 @@ public class Game {
         showCategoriesSend(player1);
     }
     
-    public void messageRecivedFromPlayer(Object message, Player from) 
+    public void messageRecivedFromPlayer(Object message, Player player) 
     {
-        System.out.println("SERVER tagit emot meddelande/objekt: " + message + " FROM " + from);
+        System.out.println("SERVER tagit emot meddelande/objekt: " + message + " FROM " + player);
 
         if (message instanceof ShowCategoriesAction)
-            showCategoriesReceived((ShowCategoriesAction)message);
-        
-        
+            showCategoriesReceived((ShowCategoriesAction)message, player); 
     }
     
-    private void showCategoriesReceived(ShowCategoriesAction data)
+    private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
-        ShowQuestionAction q;
+        ShowQuestionAction q = new ShowQuestionAction();
         currentQuestions = QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
-        //q.question = currentQuestions[q.questionNumber];
+        q.question = currentQuestions[q.questionNumber];
         
-        
-        //Server.sendObject(p.outputStream, q);
-        
+        Server.sendObject(player, q);
     }
     
     private void showCategoriesSend(Player p)
     {
         ArrayList<Category> categories = QuestionsHandler.getCategories();
-        System.out.println(categories.get(0));
-        System.out.println(categories.get(1));
-        System.out.println(categories.get(2));
         ShowCategoriesAction c = new ShowCategoriesAction();
-        c.categories = new ArrayList<>();
-        for (Category temp : categories)
-            c.categories.add(temp.name);
+        c.categories = new ArrayList();
         
-        Server.sendObject(p.outputStream, c);
+        categories.forEach((temp) -> {
+            c.categories.add(temp.name);
+        });
+        
+        Server.sendObject(p, c);
     }
 }
