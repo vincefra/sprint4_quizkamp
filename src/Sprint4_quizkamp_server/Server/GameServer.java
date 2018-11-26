@@ -15,18 +15,14 @@ public class GameServer {
             gameWaitingForPlayers = new Game();
             
             gameWaitingForPlayers.player1 = new Player(newConnection, gameWaitingForPlayers);
-            
-            //lagra game i player1
-            gameWaitingForPlayers.player1.setGame(gameWaitingForPlayers);
+
             System.out.println("player 1 har anslutit");
             gameWaitingForPlayers.startGame(); // Starta spelet.
         }
         else if (gameWaitingForPlayers.player2 == null) {
             // Detta får bli Player 2.
             gameWaitingForPlayers.player2 = new Player(newConnection, gameWaitingForPlayers);
-            
-            //lagra game i player2
-            gameWaitingForPlayers.player2.setGame(gameWaitingForPlayers);
+
             System.out.println("player 2 har anslutit");
         }
         

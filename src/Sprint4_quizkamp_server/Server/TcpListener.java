@@ -8,6 +8,7 @@ public class TcpListener
 {
     public static void main(String[] args) throws IOException 
     { 
+        /*
         final int port = 12345;
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.print("Listening - " + InetAddress.getLocalHost() + ":" + port);
@@ -33,5 +34,6 @@ public class TcpListener
                 e.printStackTrace();
             }
         } 
+*/
     }
 }

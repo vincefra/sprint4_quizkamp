@@ -6,24 +6,27 @@ import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Server {
     
-    public static final int SERVER_PORT = 12345;
+    public static final int SERVER_PORT = 12346;
     
     private static ObjectOutputStream objectOut;
     private static ObjectInputStream objectIn;
     private static InetAddress ip = null;
     private static ServerSocket serverSocket;
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnknownHostException {
         init();
     }
     
-    public static void init() {
+    public static void init() throws UnknownHostException {
     
         // Läs in frågorna.
         QuestionsHandler.init();
+        
+        System.out.print("Listening - " + InetAddress.getLocalHost() + ":" + SERVER_PORT);
         
         try {
             serverSocket = new ServerSocket(SERVER_PORT);
@@ -36,20 +39,14 @@ public class Server {
         } catch (Exception e) {
             System.out.println("fel");
         }
-        
-    
     }
     
-    public static void sendObject(ObjectOutputStream outputStream, Object objectToSend) {
+    public static void sendObject(Player player, Object objectToSend) {
         try {
-            outputStream.writeObject(objectToSend);
+            player.outputStream.writeObject(objectToSend);
         } catch (Exception e) {
-            System.out.println("SERVER: fel vid skickning");
-        }
-        
-        
-    }
-    
-    
-    
+            System.out.println(e);
+            e.printStackTrace();
+        }   
+    }   
 }
