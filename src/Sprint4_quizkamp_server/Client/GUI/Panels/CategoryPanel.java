@@ -27,7 +27,7 @@ public class CategoryPanel extends JPanel implements ActionListener {
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
         
-        categoryLabel.setPreferredSize(new Dimension(700,250));
+        categoryLabel.setPreferredSize(new Dimension(500,400));
         categoryLabel.setIcon(backIcon);
         categoryLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
         categoryLabel.setForeground(Color.YELLOW);

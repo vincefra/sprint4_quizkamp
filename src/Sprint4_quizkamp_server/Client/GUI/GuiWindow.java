@@ -23,9 +23,9 @@ public class GuiWindow extends JFrame {
 
     public void init() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(700, 500));
-        setMinimumSize(new Dimension(700, 500));
-        setMaximumSize(new Dimension(700, 500));
+        setPreferredSize(new Dimension(500, 700));
+        setMinimumSize(new Dimension(500, 700));
+        setMaximumSize(new Dimension(500, 700));
         root.setLayout(new BorderLayout());
         root.setBackground(new Color(0, 0, 55));
         kampenLabel.setHorizontalAlignment(SwingConstants.CENTER);

@@ -11,6 +11,7 @@ public class ResultPanel extends JPanel {
     private JLabel rond1Label= new JLabel("ROND 1");
     private JLabel rond2Label= new JLabel("ROND 2");
     private JLabel rond3Label= new JLabel("ROND 3");
+    private JLabel rond4Label= new JLabel("ROND 4");
 
     private JLabel play1score1= new JLabel("Score 1");
     private JLabel play2score1= new JLabel("Score 1");
@@ -18,6 +19,8 @@ public class ResultPanel extends JPanel {
     private JLabel play2score2= new JLabel("Score 2");
     private JLabel play1score3= new JLabel("Score 3");
     private JLabel play2score3= new JLabel("Score 3");
+    private JLabel play1score4= new JLabel("Score 4");
+    private JLabel play2score4= new JLabel("Score 4");
     
 
     private JButton geUppButton= new JButton("Ge upp");
@@ -34,24 +37,27 @@ public class ResultPanel extends JPanel {
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        recordPanel.setLayout(new GridLayout(4, 3, 4, 4));
+        recordPanel.setLayout(new GridLayout(5, 3, 4, 4));
         buttonPanel.setLayout(new FlowLayout());
         
         recordPanel.setBackground(new Color(96,165,191));
         buttonPanel.setBackground(new Color(96,165,191));
         resultLabel.setIcon(backIcon);
-        setLabelStyle(player1Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(player2Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(player1Label, font1, Color.WHITE, SwingConstants.RIGHT);
+        setLabelStyle(player2Label, font1, Color.WHITE, SwingConstants.LEFT);
         setLabelStyle(resultLabel, font2, Color.YELLOW, SwingConstants.CENTER);
-        setLabelStyle(play1score1, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play1score2, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(play1score1, font1, Color.WHITE, SwingConstants.RIGHT);
+        setLabelStyle(play1score2, font1, Color.WHITE, SwingConstants.RIGHT);
         setLabelStyle(rond1Label, font1, Color.WHITE, SwingConstants.CENTER);
         setLabelStyle(rond2Label, font1, Color.WHITE, SwingConstants.CENTER);
         setLabelStyle(rond3Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play2score1, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play2score2, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play1score3, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play2score3, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(rond4Label, font1, Color.WHITE, SwingConstants.CENTER);
+        setLabelStyle(play2score1, font1, Color.WHITE, SwingConstants.LEFT);
+        setLabelStyle(play2score2, font1, Color.WHITE, SwingConstants.LEFT);
+        setLabelStyle(play1score3, font1, Color.WHITE, SwingConstants.RIGHT);
+        setLabelStyle(play2score3, font1, Color.WHITE, SwingConstants.LEFT);
+        setLabelStyle(play1score4, font1, Color.WHITE, SwingConstants.RIGHT);
+        setLabelStyle(play2score4, font1, Color.WHITE, SwingConstants.LEFT);
 
         resultLabel.setHorizontalTextPosition(JLabel.CENTER);
         resultLabel.setVerticalTextPosition(JLabel.CENTER);
@@ -68,6 +74,9 @@ public class ResultPanel extends JPanel {
         recordPanel.add(play1score3);
         recordPanel.add(rond3Label);
         recordPanel.add(play2score3);
+        recordPanel.add(play1score4);
+        recordPanel.add(rond4Label);
+        recordPanel.add(play2score4);
         buttonPanel.add(spelaButton);
         buttonPanel.add(geUppButton);
          
