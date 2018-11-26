@@ -66,7 +66,7 @@ public class MyJButton extends JButton{
     }
     private void paintcolor(Color COLOR1, Color COLOR2) {
         setMargin(new Insets(0, 0, 0, 0));
-        setFont(new Font("SansSerif", Font.PLAIN, 25));
+        setFont(new Font("SansSerif", Font.PLAIN, 30));
         setBorderPainted(false);
         setForeground(Color.black);
         setFocusPainted(false);
