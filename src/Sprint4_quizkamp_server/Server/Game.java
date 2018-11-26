@@ -2,7 +2,10 @@ package Sprint4_quizkamp_server.Server;
 
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Game {
     
@@ -14,6 +17,20 @@ public class Game {
     }
     
     public void startGame() {
+
+        //Läser in properties för antal rundor/frågor
+        Properties p = new Properties();
+
+        try {
+            p.load(new FileInputStream("src\\Sprint4_quizkamp_server\\Server\\GameProperties.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int numQuestions = Integer.parseInt(p.getProperty("numberOfQuestions", "2"));
+        int numRounds = Integer.parseInt(p.getProperty("numberOfRounds", "2"));
+        System.out.println(numQuestions + " " + numRounds);
+
         // Prova visa kategorier för spelare 1.
         System.out.println("SERVER: startar game");
         ArrayList<Category> categories = QuestionsHandler.getCategories();
