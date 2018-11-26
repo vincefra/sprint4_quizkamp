@@ -38,6 +38,7 @@ public class Client {
             Object receivedObject;
             receivedObject = objectIn.readObject();
             while (receivedObject != null) {
+                System.out.println("Client: tagit emot objekt");
                 objectRecivedFromServer(receivedObject);
                 receivedObject = objectIn.readObject();
             }
@@ -54,7 +55,9 @@ public class Client {
     }
     
     private static void objectRecivedFromServer(Object o) {
+        System.out.println("Client: Inne i objectreceivedfromserver");
         if (o instanceof ShowCategoriesAction) {
+            System.out.println("Client: inne i ifsatsen");
             GuiController.ShowCategoriesWindow((ShowCategoriesAction) o);
         } else if (o instanceof ShowQuestionAction) {
             GuiController.ShowQuestionWindow((ShowQuestionAction) o);

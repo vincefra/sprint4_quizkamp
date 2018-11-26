@@ -40,9 +40,10 @@ public class Game {
         for (int i = 0; i < categories.size(); i++) {
             categoriesAsStrings.add(categories.get(i).name);
         }
+        action.categories = categoriesAsStrings;
         
         Server.sendObject(player1.outputStream, action);
-        
+        System.out.println("Server: Skickat categoryobject");
     }
     
     public void messageRecivedFromPlayer(Object message, Player from) {

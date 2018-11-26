@@ -7,8 +7,8 @@ import Sprint4_quizkamp_server.Server.Question;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
+        GuiController.init();
         Client.Init();
-//        GuiController.init();
 //        Thread.sleep(2000);
 //        ShowQuestionAction action = new ShowQuestionAction();
 //        String[] answers = {"William", "Erik", "Waldo", "Xin"};
