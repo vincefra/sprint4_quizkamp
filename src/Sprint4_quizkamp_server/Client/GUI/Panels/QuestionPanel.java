@@ -32,7 +32,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
-        questionLabel.setPreferredSize(new Dimension(700,250));
+        questionLabel.setPreferredSize(new Dimension(500,350));
         questionLabel.setIcon(backIcon);
         questionLabel.setText(action.question.getQuestion());
         questionLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
@@ -52,7 +52,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
         answer2Button.addActionListener(this::actionPerformed);
         answer3Button.addActionListener(this::actionPerformed);
         answer4Button.addActionListener(this::actionPerformed);
-        answerPanel.setLayout(new GridLayout(2,2,4,4));
+        answerPanel.setLayout(new GridLayout(2,2,10,10));
         answerPanel.add(answer1Button);
         answerPanel.add(answer2Button);
         answerPanel.add(answer3Button);
