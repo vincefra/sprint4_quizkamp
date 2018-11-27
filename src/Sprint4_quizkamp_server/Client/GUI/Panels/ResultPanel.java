@@ -24,7 +24,7 @@ public class ResultPanel extends JPanel {
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        recordPanel.setLayout(new GridLayout(5, 3, 4, 4));
+        recordPanel.setLayout(new GridLayout((rondNum+1), 3, 4, 4));
         buttonPanel.setLayout(new FlowLayout());
         
         recordPanel.setBackground(new Color(96,165,191));
