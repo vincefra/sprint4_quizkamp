@@ -32,23 +32,27 @@ public class QuestionPanel extends JPanel implements ActionListener {
 
         setBackground(new Color(0, 0, 55));
         setLayout(new BorderLayout());
+        questionLabel.setPreferredSize(new Dimension(500,350));
         questionLabel.setIcon(backIcon);
         questionLabel.setText(action.question.getQuestion());
-
+        questionLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
+        questionLabel.setForeground(Color.YELLOW);
+        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        questionLabel.setHorizontalTextPosition(JLabel.CENTER);
+        questionLabel.setVerticalTextPosition(JLabel.CENTER);
+        add(questionLabel, BorderLayout.NORTH);
+        
         answer1Button.setText(answers[0]);
         answer2Button.setText(answers[1]);
         answer3Button.setText(answers[2]);
         answer4Button.setText(answers[3]);
-        questionLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
-        questionLabel.setForeground(Color.YELLOW);
-        questionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        add(questionLabel, BorderLayout.NORTH);
+        
         
         answer1Button.addActionListener(this::actionPerformed);
         answer2Button.addActionListener(this::actionPerformed);
         answer3Button.addActionListener(this::actionPerformed);
         answer4Button.addActionListener(this::actionPerformed);
-        answerPanel.setLayout(new GridLayout(2,2,4,4));
+        answerPanel.setLayout(new GridLayout(2,2,10,10));
         answerPanel.add(answer1Button);
         answerPanel.add(answer2Button);
         answerPanel.add(answer3Button);
@@ -80,7 +84,8 @@ public class QuestionPanel extends JPanel implements ActionListener {
             clickedButton.setForeground(Color.RED);
             answer4Button.setForeground(Color.GREEN);
         }
-            Client.sendToServer(action);
+        action.questionNumber += 1;
+        Client.sendToServer(action);
         System.out.println(pickedAnswer);
     }
     
