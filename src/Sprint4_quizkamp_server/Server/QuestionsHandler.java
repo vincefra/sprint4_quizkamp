@@ -15,12 +15,8 @@ import java.util.List;
 public class QuestionsHandler {
 
     // TODO: ändra till relativ sökväg.
-    private static final String questionPath = "src/Sprint4_quizkamp_server/Server/Frågor";
+    private static final String questionPath = "C:\\Users\\willi\\Documents\\Nackademin\\OOP och Java\\Assignments\\quizkampen\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
     private static ArrayList<Category> categories;
-    
-    public static ArrayList<Category> getCategories() {
-        return categories;
-    }
     
     // Läser in alla frågor och kategorier från hårddisken.
     public static void init() {
@@ -41,40 +37,21 @@ public class QuestionsHandler {
         }
     }
     
-    public static int GetCategoryNum(String category)
-    {
-        for (int x = 0; x < getCategories().size() - 1; x++)
-            if (getCategories().get(x).name.equalsIgnoreCase(category))
-                return x;
-        return 0;
+    public static ArrayList<Category> getCategoriesCopy() {
+        ArrayList<Category> copy = new ArrayList<>();
+        for (int i = 0; i < categories.size(); i++) {
+            Category category = categories.get(i);
+            Category categoryCopy = new Category(category.name);
+            ArrayList<Question> questions = (ArrayList<Question>)category.questions.clone();
+            categoryCopy.questions = questions;
+            
+            copy.add(categoryCopy);
+        }
+        
+        return copy;
     }
     
-    public static Question[] GetQuestions(int categoryNum, int numberOfQuestions,
-        boolean remove) {
-        Category category = categories.get(categoryNum);
-        Question[] questionsToReturn = new Question[numberOfQuestions];
-        
-        // Om vi frågar efter fler frågor än det finns.
-        if (numberOfQuestions > category.questions.size()) {
-            throw new UncheckedIOException("Finns inte tillräckligt med frågor!", null);
-        }
-        
-        // Hämta ut frågorna.
-        for (int i = 0; i < questionsToReturn.length; i++) {
-            int index = Sprint4_quizkamp_server.GetRandomNum(0, category.questions.size());
-            Question question = category.questions.get(index);
-            
-            // Lägg till i arrayen.
-            questionsToReturn[i] = question;
-            
-            // Ta ev. bort frågan.
-            if (remove) {
-                category.questions.remove(index);
-            }
-        }
-        
-        return questionsToReturn;
-    }
+    
     
     private static ArrayList<Question> getQuestionsFromFile(File file) {
             ArrayList<Question> questions = new ArrayList<>();

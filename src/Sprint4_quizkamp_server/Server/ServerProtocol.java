@@ -37,7 +37,7 @@ public class ServerProtocol {
 //            state =SENTCATALOG ;
             
          if (state == SENTCATALOG) {
-            Question[] questions=QuestionsHandler.GetQuestions(Integer.parseInt(theInput), 2, false);
+            Question[] questions=QuestionsHandler.getQuestions(Integer.parseInt(theInput), 2, false);
             for(int i=0;i<questions.length;i++){
                 theOutput = questions[i];
                 

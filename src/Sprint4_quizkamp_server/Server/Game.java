@@ -13,9 +13,11 @@ public class Game {
     public Player player1;
     public Player player2;
     
-    private Question[] currentQuestions;
-    
-    int numQuestions, numRounds, currentRound;
+    private QuestionBox questionBox;
+    private Round[] rounds;
+    private int numQuestions;
+    private int numRounds;
+    private int currentRound;
     
     public boolean isFull() {
         return player1 != null && player2 != null;
@@ -36,6 +38,10 @@ public class Game {
         System.out.println(numQuestions + " " + numRounds);
 
         System.out.println("SERVER: startar game");
+        
+        currentRound = 0;
+        rounds = new Round[numRounds];
+        questionBox = new QuestionBox();
         
         showCategoriesSend(player1);
     }
@@ -78,7 +84,7 @@ public class Game {
     private void showQuestionsSend(ShowQuestionAction data, Player player)
     {
         ShowQuestionAction action = data;
-        action.question = currentQuestions[action.questionNumber];
+        action.question = getCurrentRound().questions[action.questionNumber];
         
         Server.sendObject(player, action);
     }
@@ -86,8 +92,14 @@ public class Game {
     //Ta emot vald kategori från klient
     private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
+        // Skapa en runda.
+        
+        
+        
         ShowQuestionAction q = new ShowQuestionAction();
-        currentQuestions = QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
+        Question[] currentQuestions = getCurrentRound().questions;
+        currentQuestions =
+                QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
         q.question = currentQuestions[q.questionNumber];
         
         Server.sendObject(player, q);
@@ -96,7 +108,7 @@ public class Game {
     //Skicka kategorier till klient
     private void showCategoriesSend(Player p)
     {
-        ArrayList<Category> categories = QuestionsHandler.getCategories();
+        ArrayList<Category> categories = questionBox.getCategories();
         ShowCategoriesAction c = new ShowCategoriesAction();
         c.categories = new ArrayList();
         
@@ -105,5 +117,9 @@ public class Game {
         });
         
         Server.sendObject(p, c);
+    }
+    
+    private Round getCurrentRound() {
+        return rounds[currentRound];
     }
 }
