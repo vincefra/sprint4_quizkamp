@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ResultPanel extends JPanel {
 
-    private int rondNum=3;
+    private int rondNum;
     private int LabelSize=(rondNum+1)*3;
     private JLabel[] resultLabels= new JLabel[LabelSize];
     
