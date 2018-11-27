@@ -16,9 +16,6 @@ public class QuestionBox {
     
     public QuestionBox() {
         categories = QuestionsHandler.getCategoriesCopy();
-        ArrayList<Category> copy2 = QuestionsHandler.getCategoriesCopy();
-        
-        getQuestions(categories.get(0).name, 1, true);
     }
     
     // Denna kan användas om man vill skicka in kategorin som en string istället för en int.

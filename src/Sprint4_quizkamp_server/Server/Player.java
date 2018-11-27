@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Player implements Runnable {
     
+    public String name;
     public int currentQuestionIndex;
     public Socket socket;
     public Game game;
@@ -17,15 +18,17 @@ public class Player implements Runnable {
             
     private Thread activity = new Thread(this);
     
-    public Player(Socket socket, Game game) {
-        this.socket = socket;
+    public Player(Game game) {
         this.game = game;
-        
+    }
+    
+    public void connect(Socket socket) {
+        this.socket = socket;
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) { }
-        
+    
         activity.start(); // Starta tråden.
     }
     
@@ -45,5 +48,9 @@ public class Player implements Runnable {
             System.out.println(e);
         }
         
+    }
+    
+    public boolean isConnected() {
+        return socket != null;
     }
 }

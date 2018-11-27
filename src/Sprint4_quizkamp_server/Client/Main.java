@@ -9,7 +9,6 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         GuiController.init();
         Client.Init();
-        
 
         
 //        Thread.sleep(2000);

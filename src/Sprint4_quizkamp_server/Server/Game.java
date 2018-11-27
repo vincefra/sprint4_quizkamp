@@ -1,5 +1,6 @@
 package Sprint4_quizkamp_server.Server;
 
+import Sprint4_quizkamp_server.Server.Actions.NameAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 
@@ -10,8 +11,8 @@ import java.util.Properties;
 
 public class Game {
     
-    public Player player1;
-    public Player player2;
+    public Player player1 = new Player(this);
+    public Player player2 = new Player(this);
     
     private QuestionBox questionBox;
     private Round[] rounds;
@@ -20,12 +21,16 @@ public class Game {
     private int currentRound;
     private Player startingPlayer; // Vem det är som startar rundan.
     private Player currentPlayer; // Vem som spelar just nu.
+    private boolean started = false;
+    
     
     public boolean isFull() {
         return player1 != null && player2 != null;
     }
     
     public void startGame() {
+        started = true;
+        
         //Läser in properties för antal rundor/frågor
         Properties p = new Properties();
 
@@ -44,7 +49,11 @@ public class Game {
         currentRound = 0;
         rounds = new Round[numRounds];
         questionBox = new QuestionBox();
-        startingPlayer = player1;
+        
+        if (player1.isConnected())
+            startingPlayer = player1;
+        else
+            startingPlayer = player2;
         
         startNextRound();
     }
@@ -58,7 +67,19 @@ public class Game {
     public void messageRecivedFromPlayer(Object message, Player player) 
     {
         System.out.println("SERVER tagit emot meddelande/objekt: " + message + " FROM " + player);
-
+        if (message instanceof NameAction) {
+            // Här har vi nu fått in spelarens namn.
+            
+            // Spara spelarens namn.
+            player.name = ((NameAction)message).name;
+            
+            // Om vi inte har startat så ska vi starta spelet.
+            if (!started) {
+                // Starta spelet.
+                startGame();
+            }
+            
+        }
         if (message instanceof ShowCategoriesAction)
             showCategoriesReceived((ShowCategoriesAction)message, player); 
         else if (message instanceof ShowQuestionAction)
