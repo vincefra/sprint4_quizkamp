@@ -11,6 +11,7 @@ public class Game {
     
     public Player player1;
     public Player player2;
+    public Player currentPlayer;
     
     private Question[] currentQuestions;
     
@@ -60,12 +61,47 @@ public class Game {
         player2 = temp;
     }*/
     
+    private ShowResultAction setResultAction(Game game)
+    {
+        ShowResultAction a = new ShowResultAction();
+        a.name1 = game.player1.name;
+        a.name2 = game.player2.name;
+        a.player1 = game.player1.roundScore;
+        a.player2 = game.player2.roundScore;
+        
+        return a;
+    }
+    
+    private void setPlayerScore(ShowQuestionAction data, Player player)
+    {
+        if (!player.roundScore.containsKey(currentRound))
+            player.roundScore.put(currentRound, 0);
+        
+        if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer))
+            player.roundScore.put(currentRound, player.roundScore.get(currentRound)+1);
+    }
+    
+    //0,1,2,3 fråga 1
+    //0,1,2,3 fråga 2
+    
+    //index 0 to 1 = 1 round
+    
+    //1, 2 = 1 rond, 2 right
+    //1 , 1 = 1 rond, 1 right
+    //
+    
+    //rond 1
+    
+    //0,1,2,3 fråga 1
+    //0,1,2,3 fråga 2
+    
+    //rond 2
+    
     private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException
     {
-        /*
-        if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer))
-            player.roundScore.set(numRounds, player.roundScore.get(numRounds)+1);
-        */
+        //sätt dit score på spelare
+        setPlayerScore(data, player);
+        
         //player har svarat på sista frågan
         if (data.questionNumber >= numQuestions)
         {
@@ -75,10 +111,7 @@ public class Game {
                 //runda 1 klar för p1 och p2
                 currentRound++;
                 
-                ShowResultAction a = new ShowResultAction();
-                a.player1 = player1;
-                a.player2 = player2;
-                
+                ShowResultAction a = setResultAction(this);
                 showResultWindowToSend(a, player1);
                 showResultWindowToSend(a, player2);
                 
@@ -90,7 +123,9 @@ public class Game {
                 System.out.println("yay, skicka resultat!");
                 //skicka resultatfönster till p1 och p2
             }
+            
             data.questionNumber = 0;
+            showWaitingWindowToSend(player);
             
             if (player2 == null)
             {
@@ -98,7 +133,6 @@ public class Game {
                 return;
             }
             
-            showWaitingWindowToSend(player);
             player = player.game.player2;
         }
         showQuestionsToSend(data, player);
