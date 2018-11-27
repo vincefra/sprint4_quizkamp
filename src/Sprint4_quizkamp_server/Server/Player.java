@@ -1,20 +1,23 @@
 package Sprint4_quizkamp_server.Server;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Player implements Runnable {
+public class Player implements Runnable, Serializable {
     
     public Socket socket;
     public Game game;
-    private ObjectInputStream inputStream;
     public ObjectOutputStream outputStream;
-    
-    //Varje element räknas som en runda, position 0 är runda 1
     public ArrayList<Integer> roundScore = new ArrayList<>();
-            
+    
+    private ObjectInputStream inputStream;  
     private Thread activity = new Thread(this);
+    
+    protected String name;
     
     public Player(Socket socket, Game game) {
         this.socket = socket;

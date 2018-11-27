@@ -2,7 +2,6 @@ package Sprint4_quizkamp_server.Server;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -14,7 +13,6 @@ public class Server {
     
     private static ObjectOutputStream objectOut;
     private static ObjectInputStream objectIn;
-    private static InetAddress ip = null;
     private static ServerSocket serverSocket;
     
     public static void main(String[] args) throws UnknownHostException {
@@ -33,8 +31,7 @@ public class Server {
             
             while (true) {
                 Socket newConnection = serverSocket.accept();
-                GameServer.clientConnected(newConnection);
-                
+                GameServer.clientConnected(newConnection);     
             }
         } catch (Exception e) {
             System.out.println("fel");
