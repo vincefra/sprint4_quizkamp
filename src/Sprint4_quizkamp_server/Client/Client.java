@@ -4,6 +4,7 @@ import Sprint4_quizkamp_server.Client.GUI.GuiController;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowWaitingAction;
 import Sprint4_quizkamp_server.Server.Server;
 import java.io.*;
 import java.net.InetAddress;
@@ -57,14 +58,16 @@ public class Client {
     }
     
     private static void objectRecivedFromServer(Object o) {
-        System.out.println("Client: Inne i objectreceivedfromserver");
+
         if (o instanceof ShowCategoriesAction) {
-            System.out.println("Client: inne i ifsatsen");
+
             GuiController.ShowCategoriesWindow((ShowCategoriesAction) o);
         } else if (o instanceof ShowQuestionAction) {
             GuiController.ShowQuestionWindow((ShowQuestionAction) o);
         } else if (o instanceof ShowResultAction) {
             GuiController.ShowResultWindow();
+        } else if (o instanceof ShowWaitingAction) {
+            GuiController.ShowWaitingWindow((ShowWaitingAction) o);
         } else {
             throw new IllegalArgumentException();
         }
