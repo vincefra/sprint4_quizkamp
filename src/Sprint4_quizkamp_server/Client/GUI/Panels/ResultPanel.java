@@ -1,5 +1,6 @@
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 
+import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,9 +19,13 @@ public class ResultPanel extends JPanel {
     private Font font2= new Font("SansSerif", Font.BOLD, 30);
     private JButton spelaButton= new MyJButton("SPELA",MyJButton.sky);
     private Icon backIcon= new ImageIcon("src/background.jpg");
+    private ShowResultAction action;
+  
 
 
-    public ResultPanel() {
+    public ResultPanel(ShowResultAction action) {
+        this.action= action;
+        
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -40,13 +45,16 @@ public class ResultPanel extends JPanel {
 
             }
             else if(i==0){
-                resultLabels[i].setText("PLAYER 1");
+                resultLabels[i].setText(action.name1);
             }
             else if(i==2){
-                resultLabels[i].setText("PLAYER 2");
+                resultLabels[i].setText(action.name2);
+            }
+            else if(i%3==0){
+                resultLabels[i].setText(Integer.toString(action.player1.get(i/3)));
             }
             else{
-                resultLabels[i].setText("Score");
+                resultLabels[i].setText(Integer.toString(action.player2.get(i/3)));
             }
         }
         
