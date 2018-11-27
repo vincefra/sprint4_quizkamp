@@ -15,7 +15,7 @@ public class Game {
     
     private Question[] currentQuestions;
     
-    int numQuestions, numRounds;
+    int numQuestions, numRounds, currentRound;
     
     public boolean isFull() {
         return player1 != null && player2 != null;
@@ -46,8 +46,44 @@ public class Game {
 
         if (message instanceof ShowCategoriesAction)
             showCategoriesReceived((ShowCategoriesAction)message, player); 
+        else if (message instanceof ShowQuestionAction)
+            showQuestionsReceived((ShowQuestionAction)message, player);
     }
     
+    private void showQuestionsReceived(ShowQuestionAction data, Player player)
+    {
+        if (data != null)
+        {
+            if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer))
+                //player.roundScore.add(currentRound, ++1);
+            
+            //player har svarat på sista frågan
+            if (data.questionNumber >= numQuestions)
+            {
+                //player är player 2, ska till nästa stadie
+                if (player == player2)
+                {
+                    currentRound++;
+                    
+                    System.out.println("yay, skicka resultat!");
+                    //skicka resultatfönster till p1 och p2
+                }
+                data.questionNumber = 0;
+                player = player.game.player2;
+            }
+            showQuestionsSend(data, player);
+        }
+    }
+    
+    private void showQuestionsSend(ShowQuestionAction data, Player player)
+    {
+        ShowQuestionAction action = data;
+        action.question = currentQuestions[action.questionNumber];
+        
+        Server.sendObject(player, action);
+    }
+    
+    //Ta emot vald kategori från klient
     private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
         ShowQuestionAction q = new ShowQuestionAction();
@@ -57,6 +93,7 @@ public class Game {
         Server.sendObject(player, q);
     }
     
+    //Skicka kategorier till klient
     private void showCategoriesSend(Player p)
     {
         ArrayList<Category> categories = QuestionsHandler.getCategories();

@@ -1,10 +1,16 @@
 package Sprint4_quizkamp_server.Client.GUI;
 
+import Sprint4_quizkamp_server.Client.Client;
 import Sprint4_quizkamp_server.Client.GUI.Panels.MyJButton;
+import Sprint4_quizkamp_server.Server.Actions.NameAction;
+
+import javax.naming.Name;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GuiWindow extends JFrame {
+public class GuiWindow extends JFrame implements ActionListener {
 
     private JPanel root = new JPanel();
     private JPanel splitBottom = new JPanel();
@@ -26,6 +32,7 @@ public class GuiWindow extends JFrame {
         setPreferredSize(new Dimension(500, 700));
         setMinimumSize(new Dimension(500, 700));
         setMaximumSize(new Dimension(500, 700));
+        playButton.addActionListener(this::actionPerformed);
         root.setLayout(new BorderLayout());
         root.setBackground(new Color(0, 0, 55));
         kampenLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,4 +61,13 @@ public class GuiWindow extends JFrame {
         setVisible(true);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!nameTextField.getText().trim().equalsIgnoreCase("")) {
+            System.out.println("Skickar " + nameTextField.getText().trim());
+            Client.sendToServer(new NameAction(nameTextField.getText().trim()));
+        } else {
+            JOptionPane.showMessageDialog(null,"Ange ett giltigt namn innan du börjar spela.");
+        }
+    }
 }

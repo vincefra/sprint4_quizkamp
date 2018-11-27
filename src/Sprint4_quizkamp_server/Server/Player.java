@@ -2,16 +2,19 @@ package Sprint4_quizkamp_server.Server;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Player implements Runnable {
     
     public Socket socket;
-    private Game game;
+    public Game game;
     private ObjectInputStream inputStream;
     public ObjectOutputStream outputStream;
     
+    //Varje element räknas som en runda, position 0 är runda 1
+    public ArrayList<Integer> roundScore = new ArrayList<>();
+            
     private Thread activity = new Thread(this);
-    
     
     public Player(Socket socket, Game game) {
         this.socket = socket;
@@ -34,10 +37,8 @@ public class Player implements Runnable {
         try {
             while (true) {
                 // kolla efter medd.
-                System.out.println("objekt incoming");
                 Object objectRecived = inputStream.readObject();
                 game.messageRecivedFromPlayer(objectRecived, this);
-                System.out.println("objekt done");
             }
         } catch (Exception e) {
             System.out.println(e);
