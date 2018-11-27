@@ -5,26 +5,13 @@ import java.awt.*;
 
 public class ResultPanel extends JPanel {
 
-    private JLabel resultLabel = new JLabel("Resultat");
-    private JLabel player1Label = new JLabel("Player 1");
-    private JLabel player2Label = new JLabel("Player 2");
-    private JLabel rond1Label= new JLabel("ROND 1");
-    private JLabel rond2Label= new JLabel("ROND 2");
-    private JLabel rond3Label= new JLabel("ROND 3");
-    private JLabel rond4Label= new JLabel("ROND 4");
-
-    private JLabel play1score1= new JLabel("Score 1");
-    private JLabel play2score1= new JLabel("Score 1");
-    private JLabel play1score2= new JLabel("Score 2");
-    private JLabel play2score2= new JLabel("Score 2");
-    private JLabel play1score3= new JLabel("Score 3");
-    private JLabel play2score3= new JLabel("Score 3");
-    private JLabel play1score4= new JLabel("Score 4");
-    private JLabel play2score4= new JLabel("Score 4");
+    private int rondNum=2;
+    private int LabelSize=(rondNum+1)*3;
+    private JLabel[] resultLabels= new JLabel[LabelSize];
+    
     
 
     private JButton geUppButton= new JButton("Ge upp");
-//    private JButton spelaButton= new JButton("SPELA");
     private JPanel recordPanel= new JPanel();
     private JPanel buttonPanel= new JPanel();
     private Font font1= new Font("SansSerif", Font.PLAIN, 20);
@@ -42,41 +29,22 @@ public class ResultPanel extends JPanel {
         
         recordPanel.setBackground(new Color(96,165,191));
         buttonPanel.setBackground(new Color(96,165,191));
-        resultLabel.setIcon(backIcon);
-        setLabelStyle(player1Label, font1, Color.WHITE, SwingConstants.RIGHT);
-        setLabelStyle(player2Label, font1, Color.WHITE, SwingConstants.LEFT);
-        setLabelStyle(resultLabel, font2, Color.YELLOW, SwingConstants.CENTER);
-        setLabelStyle(play1score1, font1, Color.WHITE, SwingConstants.RIGHT);
-        setLabelStyle(play1score2, font1, Color.WHITE, SwingConstants.RIGHT);
-        setLabelStyle(rond1Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(rond2Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(rond3Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(rond4Label, font1, Color.WHITE, SwingConstants.CENTER);
-        setLabelStyle(play2score1, font1, Color.WHITE, SwingConstants.LEFT);
-        setLabelStyle(play2score2, font1, Color.WHITE, SwingConstants.LEFT);
-        setLabelStyle(play1score3, font1, Color.WHITE, SwingConstants.RIGHT);
-        setLabelStyle(play2score3, font1, Color.WHITE, SwingConstants.LEFT);
-        setLabelStyle(play1score4, font1, Color.WHITE, SwingConstants.RIGHT);
-        setLabelStyle(play2score4, font1, Color.WHITE, SwingConstants.LEFT);
-
-        resultLabel.setHorizontalTextPosition(JLabel.CENTER);
-        resultLabel.setVerticalTextPosition(JLabel.CENTER);
+        
+        for(int i=0;i<LabelSize;i++){
+            setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
+            recordPanel.add(resultLabels[i]);
+            if(i>2&&i%3==1){
+                resultLabels[i].setText("ROND "+i/3);
+            }
+            else
+                resultLabels[i].setText("score");
+        }
+        
+        resultLabels[1].setIcon(backIcon);
+        resultLabels[1].setHorizontalTextPosition(JLabel.CENTER);
+        resultLabels[1].setVerticalTextPosition(JLabel.CENTER);
      
-        recordPanel.add(player1Label);
-        recordPanel.add(resultLabel);
-        recordPanel.add(player2Label);
-        recordPanel.add(play1score1);
-        recordPanel.add(rond1Label);
-        recordPanel.add(play2score1);
-        recordPanel.add(play1score2);
-        recordPanel.add(rond2Label);
-        recordPanel.add(play2score2);
-        recordPanel.add(play1score3);
-        recordPanel.add(rond3Label);
-        recordPanel.add(play2score3);
-        recordPanel.add(play1score4);
-        recordPanel.add(rond4Label);
-        recordPanel.add(play2score4);
+       
         buttonPanel.add(spelaButton);
         buttonPanel.add(geUppButton);
          
