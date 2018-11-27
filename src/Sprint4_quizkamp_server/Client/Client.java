@@ -1,6 +1,10 @@
 package Sprint4_quizkamp_server.Client;
 
+import Sprint4_quizkamp_server.Client.GUI.GuiController;
 import Sprint4_quizkamp_server.Server.Actions.Action;
+import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import Sprint4_quizkamp_server.Server.Server;
 
 import java.awt.event.ActionEvent;
@@ -33,8 +37,6 @@ public class Client {
             Socket socketToServer = new Socket(ip, Server.SERVER_PORT);
             objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             objectIn = new ObjectInputStream(socketToServer.getInputStream());
-    
-            sendToServer("hej");
             
             Object receivedObject;
             receivedObject = objectIn.readObject();
@@ -55,7 +57,12 @@ public class Client {
     }
     
     private static void objectRecivedFromServer(Object o) {
-        
+        if (o instanceof ShowCategoriesAction)
+            GuiController.ShowCategoriesWindow();
+        else if (o instanceof ShowQuestionAction)
+            GuiController.ShowQuestionWindow();
+        else if (o instanceof ShowResultAction)
+            GuiController.ShowResultWindow();
     }
     
     

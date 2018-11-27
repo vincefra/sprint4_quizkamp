@@ -18,10 +18,6 @@ public class QuestionsHandler {
     private static final String questionPath = "C:\\Users\\willi\\Documents\\Nackademin\\OOP och Java\\Assignments\\quizkampen\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
     private static ArrayList<Category> categories;
     
-    public static ArrayList<Category> getCategories() {
-        return categories;
-    }
-    
     // Läser in alla frågor och kategorier från hårddisken.
     public static void init() {
         categories = new ArrayList<>();
@@ -41,32 +37,7 @@ public class QuestionsHandler {
         }
     }
     
-    public static Question[] GetQuestions(int categoryNum, int numberOfQuestions,
-        boolean remove) {
-        Category category = categories.get(categoryNum);
-        Question[] questionsToReturn = new Question[numberOfQuestions];
-        
-        // Om vi frågar efter fler frågor än det finns.
-        if (numberOfQuestions > category.questions.size()) {
-            throw new UncheckedIOException("Finns inte tillräckligt med frågor!", null);
-        }
-        
-        // Hämta ut frågorna.
-        for (int i = 0; i < questionsToReturn.length; i++) {
-            int index = Sprint4_quizkamp_server.GetRandomNum(0, category.questions.size());
-            Question question = category.questions.get(index);
-            
-            // Lägg till i arrayen.
-            questionsToReturn[i] = question;
-            
-            // Ta ev. bort frågan.
-            if (remove) {
-                category.questions.remove(index);
-            }
-        }
-        
-        return questionsToReturn;
-    }
+    
     
     private static ArrayList<Question> getQuestionsFromFile(File file) {
             ArrayList<Question> questions = new ArrayList<>();
