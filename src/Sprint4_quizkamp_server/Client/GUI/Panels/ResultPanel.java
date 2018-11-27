@@ -32,16 +32,26 @@ public class ResultPanel extends JPanel {
         
         for(int i=0;i<LabelSize;i++){
             resultLabels[i]= new JLabel();
-            setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
+            setLabelStyle(resultLabels[i], font1, Color.WHITE, JLabel.CENTER);
             recordPanel.add(resultLabels[i]);
             if(i>2&&i%3==1){
                 resultLabels[i].setText("ROND "+i/3);
+                setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
+
             }
-            else
-                resultLabels[i].setText("score");
+            else if(i==0){
+                resultLabels[i].setText("PLAYER 1");
+            }
+            else if(i==2){
+                resultLabels[i].setText("PLAYER 2");
+            }
+            else{
+                resultLabels[i].setText("Score");
+            }
         }
         
         resultLabels[1].setIcon(backIcon);
+        setLabelStyle(resultLabels[1], font2, Color.yellow, JLabel.CENTER);
         resultLabels[1].setHorizontalTextPosition(JLabel.CENTER);
         resultLabels[1].setVerticalTextPosition(JLabel.CENTER);
      
