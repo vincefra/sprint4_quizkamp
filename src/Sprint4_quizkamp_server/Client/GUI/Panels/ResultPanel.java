@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class ResultPanel extends JPanel {
 
-    private int rondNum=2;
+    private int rondNum=3;
     private int LabelSize=(rondNum+1)*3;
     private JLabel[] resultLabels= new JLabel[LabelSize];
     
@@ -31,6 +31,7 @@ public class ResultPanel extends JPanel {
         buttonPanel.setBackground(new Color(96,165,191));
         
         for(int i=0;i<LabelSize;i++){
+            resultLabels[i]= new JLabel();
             setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
             recordPanel.add(resultLabels[i]);
             if(i>2&&i%3==1){
