@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Player implements Runnable {
     
+    public int currentQuestionIndex;
     public Socket socket;
     public Game game;
     private ObjectInputStream inputStream;

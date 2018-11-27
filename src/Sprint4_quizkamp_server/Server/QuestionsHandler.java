@@ -15,7 +15,7 @@ import java.util.List;
 public class QuestionsHandler {
 
     // TODO: ändra till relativ sökväg.
-    private static final String questionPath = "C:\\Users\\willi\\Documents\\Nackademin\\OOP och Java\\Assignments\\quizkampen\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
+    private static final String questionPath = "C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
     private static ArrayList<Category> categories;
     
     // Läser in alla frågor och kategorier från hårddisken.

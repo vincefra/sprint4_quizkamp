@@ -18,6 +18,8 @@ public class Game {
     private int numQuestions;
     private int numRounds;
     private int currentRound;
+    private Player startingPlayer; // Vem det är som startar rundan.
+    private Player currentPlayer; // Vem som spelar just nu.
     
     public boolean isFull() {
         return player1 != null && player2 != null;
@@ -28,7 +30,7 @@ public class Game {
         Properties p = new Properties();
 
         try {
-            p.load(new FileInputStream("src/Sprint4_quizkamp_server/Server/GameProperties.properties"));
+            p.load(new FileInputStream("C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Server\\GameProperties.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,8 +44,15 @@ public class Game {
         currentRound = 0;
         rounds = new Round[numRounds];
         questionBox = new QuestionBox();
+        startingPlayer = player1;
         
-        showCategoriesSend(player1);
+        startNextRound();
+    }
+    
+    private void startNextRound() {
+        player1.currentQuestionIndex = 0;
+        player2.currentQuestionIndex = 0;
+        showCategoriesSend(startingPlayer);
     }
     
     public void messageRecivedFromPlayer(Object message, Player player) 
@@ -58,49 +67,78 @@ public class Game {
     
     private void showQuestionsReceived(ShowQuestionAction data, Player player)
     {
-        if (data != null)
-        {
-            if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer))
-                //player.roundScore.add(currentRound, ++1);
-            
-            //player har svarat på sista frågan
-            if (data.questionNumber >= numQuestions)
-            {
-                //player är player 2, ska till nästa stadie
-                if (player == player2)
-                {
-                    currentRound++;
-                    
-                    System.out.println("yay, skicka resultat!");
-                    //skicka resultatfönster till p1 och p2
-                }
-                data.questionNumber = 0;
-                player = player.game.player2;
-            }
-            showQuestionsSend(data, player);
+        if (data == null) return;
+    
+        getCurrentRound().totalNumberOfAnswersRecived++;
+    
+        // Kolla om vi haft rätt.
+        if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer)) {
+            // Spelaren har haft rätt.
+            if (player == player1)
+                getCurrentRound().player1Points++;
+            else
+                getCurrentRound().player2Points++;
         }
+    
+        // Kolla om rundan är över.
+        if (getCurrentRound().totalNumberOfAnswersRecived == numQuestions * 2) {
+            // Rundan är över.
+            System.out.println("yay, skicka resultat!");
+            currentRound++;
+        
+            //skicka resultatfönster till p1 och p2
+            // Kolla om spelet är slut.
+            if (currentRound >= numRounds) {
+                // Spelet är slut.
+            }
+            else {
+                // Spelet fortsätter med nästa runda.
+                // Kolla vem som ska starta nästa runda.
+                startingPlayer = getOtherPlayer(startingPlayer);
+            
+                startNextRound();
+            }
+        }
+        else {
+            // Rundan är inte över.
+            // Kolla om spelet ska gå över till andra spelaren.
+            if (getCurrentRound().totalNumberOfAnswersRecived == numQuestions) {
+            
+            }
+            else {
+                // Spelet ska fortsätta för denna spelaren.
+                ShowQuestionAction action = new ShowQuestionAction();
+                action.question = getCurrentRound().questions[currentPlayer.currentQuestionIndex];
+                showQuestionsSend(action, currentPlayer);
+            }
+            
+        }
+    
+        data.questionNumber = 0;
+        player = player.game.player2;
+        showQuestionsSend(data, player);
     }
     
     private void showQuestionsSend(ShowQuestionAction data, Player player)
     {
+        currentPlayer = player;
         ShowQuestionAction action = data;
         action.question = getCurrentRound().questions[action.questionNumber];
         
         Server.sendObject(player, action);
+        currentPlayer.currentQuestionIndex++;
     }
     
     //Ta emot vald kategori från klient
     private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
         // Skapa en runda.
-        
+        rounds[currentRound] = new Round();
+        rounds[currentRound].questions = questionBox.getQuestions(data.chosenCategory, numQuestions, true);
         
         
         ShowQuestionAction q = new ShowQuestionAction();
-        Question[] currentQuestions = getCurrentRound().questions;
-        currentQuestions =
-                QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
-        q.question = currentQuestions[q.questionNumber];
+        q.question = rounds[currentRound].questions[0];
         
         Server.sendObject(player, q);
     }
@@ -108,6 +146,7 @@ public class Game {
     //Skicka kategorier till klient
     private void showCategoriesSend(Player p)
     {
+        currentPlayer = p;
         ArrayList<Category> categories = questionBox.getCategories();
         ShowCategoriesAction c = new ShowCategoriesAction();
         c.categories = new ArrayList();
@@ -121,5 +160,30 @@ public class Game {
     
     private Round getCurrentRound() {
         return rounds[currentRound];
+    }
+    
+    private int getPlayer1TotalPoints() {
+        int total = 0;
+        for (int i = 0; i < rounds.length; i++) {
+            total += rounds[i].player1Points;
+        }
+        
+        return total;
+    }
+    
+    private int getPlayer2TotalPoints() {
+        int total = 0;
+        for (int i = 0; i < rounds.length; i++) {
+            total += rounds[i].player2Points;
+        }
+        
+        return total;
+    }
+    
+    private Player getOtherPlayer(Player p) {
+        if (p == player1)
+            return player2;
+        else
+            return player1;
     }
 }
