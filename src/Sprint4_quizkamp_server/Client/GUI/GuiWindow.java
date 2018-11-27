@@ -32,7 +32,7 @@ public class GuiWindow extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(500, 700));
         setMinimumSize(new Dimension(500, 700));
         setMaximumSize(new Dimension(500, 700));
-//        playButton.addActionListener(this::actionPerformed);
+        playButton.addActionListener(this::actionPerformed);
         root.setLayout(new BorderLayout());
         root.setBackground(new Color(0, 0, 55));
         kampenLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -63,15 +63,9 @@ public class GuiWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Client.Init();
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
         if (!nameTextField.getText().trim().equalsIgnoreCase("")) {
             System.out.println("Skickar " + nameTextField.getText().trim());
-//            Client.sendToServer(new NameAction(nameTextField.getText().trim()));
+            Client.sendToServer(new NameAction(nameTextField.getText().trim()));
         } else {
             JOptionPane.showMessageDialog(null,"Ange ett giltigt namn innan du börjar spela.");
         }
