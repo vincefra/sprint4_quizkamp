@@ -5,11 +5,14 @@ import java.awt.*;
 
 public class WaitingPanel extends JPanel {
     private JLabel waitingLabel = new JLabel("Väntar på motståndare");
+    private Icon backIcon= new ImageIcon("src/background.jpg");
 
     public WaitingPanel() {
-        waitingLabel.setFont(new Font("SansSerif", Font.BOLD, 28));
-        waitingLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        waitingLabel.setVerticalAlignment(SwingConstants.CENTER);
+        waitingLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
+        waitingLabel.setForeground(Color.YELLOW);
+        waitingLabel.setIcon(backIcon);
+        waitingLabel.setHorizontalTextPosition(JLabel.CENTER);
+        waitingLabel.setVerticalTextPosition(JLabel.CENTER);
         add(waitingLabel);
     }
 }

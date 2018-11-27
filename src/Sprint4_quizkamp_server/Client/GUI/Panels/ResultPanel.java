@@ -16,7 +16,7 @@ public class ResultPanel extends JPanel {
     private JPanel buttonPanel= new JPanel();
     private Font font1= new Font("SansSerif", Font.PLAIN, 20);
     private Font font2= new Font("SansSerif", Font.BOLD, 30);
-    JButton spelaButton= new MyJButton("SPELA",MyJButton.sky);
+    private JButton spelaButton= new MyJButton("SPELA",MyJButton.sky);
     private Icon backIcon= new ImageIcon("src/background.jpg");
 
 
