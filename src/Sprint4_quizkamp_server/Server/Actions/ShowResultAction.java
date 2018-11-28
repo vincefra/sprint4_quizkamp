@@ -9,7 +9,7 @@ public class ShowResultAction extends Action {
     public HashMap<Integer,Integer> player2 = new HashMap<>(); 
     public String name1;
     public String name2;
-    
+    public int rondNum;
     /*
     (0,1) = round 0, 1 score
     (1,1) = round 1, 1 score

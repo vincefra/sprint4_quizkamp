@@ -68,6 +68,7 @@ public class Game {
         a.name2 = game.player2.name;
         a.player1 = game.player1.roundScore;
         a.player2 = game.player2.roundScore;
+        a.rondNum = this.numRounds;
         
         return a;
     }

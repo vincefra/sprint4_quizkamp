@@ -25,7 +25,7 @@ public class ResultPanel extends JPanel {
 
     public ResultPanel(ShowResultAction action) {
         this.action= action;
-        
+        rondNum = this.action.rondNum;
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
