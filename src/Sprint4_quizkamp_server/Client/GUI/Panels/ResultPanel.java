@@ -39,29 +39,34 @@ public class ResultPanel extends JPanel {
             resultLabels[i]= new JLabel();
             setLabelStyle(resultLabels[i], font1, Color.WHITE, JLabel.CENTER);
             recordPanel.add(resultLabels[i]);
-            if(i>2&&i%3==1){
+            
+            if(i==0){
+                resultLabels[i].setText(this.action.name1);
+            }
+            else if(i==2){
+                resultLabels[i].setText(this.action.name2);
+            }
+            else if(i==1){
+                resultLabels[i].setText("RESULT");
+                resultLabels[1].setIcon(backIcon);
+                setLabelStyle(resultLabels[i], font2, Color.yellow, JLabel.CENTER);
+                resultLabels[i].setHorizontalTextPosition(JLabel.CENTER);
+                resultLabels[i].setVerticalTextPosition(JLabel.CENTER);
+            }
+            else if(i%3==1){
                 resultLabels[i].setText("ROND "+i/3);
                 setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
 
             }
-            else if(i==0){
-                resultLabels[i].setText(action.name1);
-            }
-            else if(i==2){
-                resultLabels[i].setText(action.name2);
-            }
             else if(i%3==0){
-                resultLabels[i].setText(Integer.toString(action.player1.get(i/3)));
+                resultLabels[i].setText(Integer.toString(this.action.player1.get(i/3)));
             }
             else{
-                resultLabels[i].setText(Integer.toString(action.player2.get(i/3)));
+                resultLabels[i].setText(Integer.toString(this.action.player2.get(i/3)));
             }
         }
         
-        resultLabels[1].setIcon(backIcon);
-        setLabelStyle(resultLabels[1], font2, Color.yellow, JLabel.CENTER);
-        resultLabels[1].setHorizontalTextPosition(JLabel.CENTER);
-        resultLabels[1].setVerticalTextPosition(JLabel.CENTER);
+        
      
        
         buttonPanel.add(spelaButton);
