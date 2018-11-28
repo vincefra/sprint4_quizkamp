@@ -47,7 +47,7 @@ public class Server {
         try {
             player.outputStream.writeObject(objectToSend);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e + " från serverklassen");
             e.printStackTrace();
         }   
     }   

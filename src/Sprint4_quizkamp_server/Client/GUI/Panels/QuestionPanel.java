@@ -4,6 +4,7 @@ import Sprint4_quizkamp_server.Client.Client;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 
 import javax.swing.*;
+import Sprint4_quizkamp_server.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,7 @@ public class QuestionPanel extends JPanel implements ActionListener {
     private Color color= new Color(96,165,191);
     
     private Font font= new Font("SansSerif", Font.PLAIN, 28);
-    private Icon backIcon= new ImageIcon("src/background.jpg");
+    private Icon backIcon= new ImageIcon(Locations.bgPath());
     private Dimension dimenstion= new Dimension(160,50);
     
     

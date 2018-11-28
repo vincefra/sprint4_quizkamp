@@ -1,11 +1,10 @@
 package Sprint4_quizkamp_server.Server;
 
-import Sprint4_quizkamp_server.Server.Actions.NameAction;
-import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
-import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
-
+import Sprint4_quizkamp_server.Server.Actions.*;
+import Sprint4_quizkamp_server.*;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -15,17 +14,15 @@ public class Game {
     public Player player2 = new Player(this);
     
     private QuestionBox questionBox;
-    private Round[] rounds;
+    private ArrayList<Round> rounds;
     private int numQuestions;
     private int numRounds;
-    private int currentRound;
-    private Player startingPlayer; // Vem det är som startar rundan.
     private Player currentPlayer; // Vem som spelar just nu.
     private boolean started = false;
     
     
     public boolean isFull() {
-        return player1 != null && player2 != null;
+        return player1.isConnected() && player2.isConnected();
     }
     
     public void startGame() {
@@ -35,7 +32,7 @@ public class Game {
         Properties p = new Properties();
 
         try {
-            p.load(new FileInputStream("C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Server\\GameProperties.properties"));
+            p.load(new FileInputStream(Locations.settingsPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,22 +43,20 @@ public class Game {
 
         System.out.println("SERVER: startar game");
         
-        currentRound = 0;
-        rounds = new Round[numRounds];
+        rounds = new ArrayList<>();
         questionBox = new QuestionBox();
         
+        Player startingPlayer = null;
         if (player1.isConnected())
             startingPlayer = player1;
         else
             startingPlayer = player2;
         
-        startNextRound();
+        startNextRound(startingPlayer);
     }
     
-    private void startNextRound() {
-        player1.currentQuestionIndex = 0;
-        player2.currentQuestionIndex = 0;
-        showCategoriesSend(startingPlayer);
+    private void startNextRound(Player playerToStart) {
+        showCategoriesSend(playerToStart);
     }
     
     public void messageRecivedFromPlayer(Object message, Player player) 
@@ -78,6 +73,18 @@ public class Game {
                 // Starta spelet.
                 startGame();
             }
+            else {
+                // Nu har spelare nummer 2 kommit in.
+                if (currentPlayer == null) {
+                    // Vår tur att spela. Spelare 1 har väntat på att vi ska connecta.
+                    opponentsTurn(player);
+                }
+                else {
+                    // Vänta på den andra spelaren.
+                    // Visa väntaskärmen.
+                    showWaitingScreen(player);
+                }
+            }
             
         }
         if (message instanceof ShowCategoriesAction)
@@ -86,82 +93,63 @@ public class Game {
             showQuestionsReceived((ShowQuestionAction)message, player);
     }
     
+    private void showWaitingScreen(Player p) {
+        ShowWaitingAction action = new ShowWaitingAction();
+        Server.sendObject(p, action);
+    }
+    
     private void showQuestionsReceived(ShowQuestionAction data, Player player)
     {
         if (data == null) return;
     
-        getCurrentRound().totalNumberOfAnswersRecived++;
-    
+        if (player == player1) {
+            getCurrentRound().questionsAnsweredByPlayer1++;
+        } else if (player == player2) {
+            getCurrentRound().questionsAnsweredByPlayer2++;
+        }
+        
         // Kolla om vi haft rätt.
         if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer)) {
             // Spelaren har haft rätt.
             if (player == player1)
                 getCurrentRound().player1Points++;
-            else
+            else if (player == player2)
                 getCurrentRound().player2Points++;
         }
     
-        // Kolla om rundan är över.
-        if (getCurrentRound().totalNumberOfAnswersRecived == numQuestions * 2) {
-            // Rundan är över.
-            System.out.println("yay, skicka resultat!");
-            currentRound++;
-        
-            //skicka resultatfönster till p1 och p2
-            // Kolla om spelet är slut.
-            if (currentRound >= numRounds) {
-                // Spelet är slut.
-            }
-            else {
-                // Spelet fortsätter med nästa runda.
-                // Kolla vem som ska starta nästa runda.
-                startingPlayer = getOtherPlayer(startingPlayer);
-            
-                startNextRound();
-            }
+        // Kolla om rundan är över för just denna spelaren.
+        if (currentPlayer == player1
+                && getCurrentRound().questionsAnsweredByPlayer1 == getCurrentRound().totalQuestions()) {
+            // Rundan är över för player1.
+            onRoundCompleteByPlayer(player1);
+        } else if (currentPlayer == player2
+                && getCurrentRound().questionsAnsweredByPlayer2 == getCurrentRound().totalQuestions()) {
+            // Rundan är över för player2.
+            onRoundCompleteByPlayer(player2);
         }
         else {
-            // Rundan är inte över.
-            // Kolla om spelet ska gå över till andra spelaren.
-            if (getCurrentRound().totalNumberOfAnswersRecived == numQuestions) {
-            
-            }
-            else {
-                // Spelet ska fortsätta för denna spelaren.
-                ShowQuestionAction action = new ShowQuestionAction();
-                action.question = getCurrentRound().questions[currentPlayer.currentQuestionIndex];
-                showQuestionsSend(action, currentPlayer);
-            }
-            
+            // Rundan ska fortsätta för den nuvarande spelaren.
+            showNextQuestionForPlayer(player);
         }
-    
-        data.questionNumber = 0;
-        player = player.game.player2;
-        showQuestionsSend(data, player);
     }
     
-    private void showQuestionsSend(ShowQuestionAction data, Player player)
-    {
+    private void showNextQuestionForPlayer(Player player) {
         currentPlayer = player;
-        ShowQuestionAction action = data;
-        action.question = getCurrentRound().questions[action.questionNumber];
+        ShowQuestionAction action = new ShowQuestionAction();
+        action.question = getCurrentRound().getNextQuestionForPlayer(player, this);
         
         Server.sendObject(player, action);
-        currentPlayer.currentQuestionIndex++;
     }
     
     //Ta emot vald kategori från klient
     private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
         // Skapa en runda.
-        rounds[currentRound] = new Round();
-        rounds[currentRound].questions = questionBox.getQuestions(data.chosenCategory, numQuestions, true);
+        rounds.add(new Round());
+        getCurrentRound().playerThatStartedRound = player;
+        getCurrentRound().questions = questionBox.getQuestions(data.chosenCategory, numQuestions, true);
         
-        
-        ShowQuestionAction q = new ShowQuestionAction();
-        q.question = rounds[currentRound].questions[0];
-        
-        Server.sendObject(player, q);
+        showNextQuestionForPlayer(player);
     }
     
     //Skicka kategorier till klient
@@ -180,13 +168,19 @@ public class Game {
     }
     
     private Round getCurrentRound() {
-        return rounds[currentRound];
+        return rounds.get(rounds.size() - 1);
+    }
+    
+    private int getPlayerTotalPoints(Player p) {
+        if (p == player1) return getPlayer1TotalPoints();
+        else
+            return getPlayer2TotalPoints();
     }
     
     private int getPlayer1TotalPoints() {
         int total = 0;
-        for (int i = 0; i < rounds.length; i++) {
-            total += rounds[i].player1Points;
+        for (int i = 0; i < rounds.size(); i++) {
+            total += rounds.get(i).player1Points;
         }
         
         return total;
@@ -194,8 +188,8 @@ public class Game {
     
     private int getPlayer2TotalPoints() {
         int total = 0;
-        for (int i = 0; i < rounds.length; i++) {
-            total += rounds[i].player2Points;
+        for (int i = 0; i < rounds.size(); i++) {
+            total += rounds.get(i).player2Points;
         }
         
         return total;
@@ -206,5 +200,76 @@ public class Game {
             return player2;
         else
             return player1;
+    }
+    
+    // Denna kallas på när en spelare har spelat klart sin del av rundan och
+    // turen ska övergå till motståndaren.
+    private void opponentsTurn(Player playerThatWillPlay) {
+        // Vi ska bara starta nästa runda om den spelaren har connectat.
+        if (playerThatWillPlay.isConnected()) {
+            showNextQuestionForPlayer(playerThatWillPlay);
+        }
+        else {
+            // Då får vi invänta motståndaren.
+            currentPlayer = null;
+        }
+    }
+    
+    private void showResultWindowForBoth() {
+        ShowResultAction action = new ShowResultAction();
+        for (int i = 0; i < rounds.size(); i++) {
+            action.player1.put(i, rounds.get(i).player1Points);
+            action.player2.put(i, rounds.get(i).player2Points);
+        }
+        action.name1 = player1.name;
+        action.name2 = player2.name;
+        action.rondNum = rounds.size();
+        
+        Server.sendObject(player1, action);
+        Server.sendObject(player2, action);
+    }
+    
+    // Kallas på när någon av spelarna har svarat på alla frågor i en round.
+    private void onRoundCompleteByPlayer(Player p) {
+    
+        System.out.println("Rundan för " + p.name + " är slut.");
+        System.out.println("Poäng för " + p.name + ": " + getPlayerTotalPoints(p));
+        
+        // Kolla om både player 1 och player 2 har spelat klart.
+        if (getCurrentRound().isRoundOver()) {
+            // Ja, denna rundan är färdigspelad för båda spelarna.
+            showResultWindowForBoth();
+            try
+            {
+                Thread.sleep(10000);
+            } catch (Exception e) {}
+            
+            // Kolla om spelet är slut.
+            if (rounds.size() == numRounds) {
+                // Spelet är slut.
+                System.out.println("Spelet är slut.");
+                try {
+                    Thread.sleep(Long.MAX_VALUE);
+                } catch (Exception e) { e.printStackTrace(); }
+                
+            }
+            else {
+                // Spelet fortsätter med nästa runda.
+                // Kolla vem som ska starta nästa runda.
+                Player playerToStartNextRound = getOtherPlayer(getCurrentRound().playerThatStartedRound);
+                startNextRound(playerToStartNextRound);
+                // Se till att väntskärmen visas för den andra spelaren.
+                showWaitingScreen(getOtherPlayer(playerToStartNextRound));
+            }
+        }
+        else {
+            // Turen för rundan ska gå till den andra spelaren.
+            // Visa väntskärmen för denna spelaren.
+            showWaitingScreen(currentPlayer);
+            Player otherPlayer = getOtherPlayer(currentPlayer); // Hämtar motståndaren.
+            opponentsTurn(otherPlayer);
+        }
+        
+        
     }
 }

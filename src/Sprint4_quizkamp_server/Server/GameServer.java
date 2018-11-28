@@ -18,7 +18,7 @@ public class GameServer {
 
             System.out.println("player 1 har anslutit");
         }
-        else if (gameWaitingForPlayers.player2 == null) {
+        else if (!gameWaitingForPlayers.player2.isConnected()) {
             // Spelare 2 har anslutit.
             gameWaitingForPlayers.player2.connect(newConnection);
 

@@ -1,15 +1,10 @@
 package Sprint4_quizkamp_server.Client.GUI;
 
-import Sprint4_quizkamp_server.Client.GUI.Panels.CategoryPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.QuestionPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.ResultPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.WaitingPanel;
+import Sprint4_quizkamp_server.Client.GUI.Panels.*;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
+import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowWaitingAction;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GuiController {
 
@@ -44,9 +39,9 @@ public class GuiController {
         gui.repaint();
     }
 
-    public static void ShowResultWindow() {
+    public static void ShowResultWindow(ShowResultAction action) {
         gui.getContentPane().removeAll();
-        gui.getContentPane().add(new ResultPanel());
+        gui.getContentPane().add(new ResultPanel(action));
         gui.revalidate();
         gui.repaint();
     }

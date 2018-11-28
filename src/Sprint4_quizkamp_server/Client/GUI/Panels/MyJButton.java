@@ -5,6 +5,7 @@ Java18-OOJ
 
 package Sprint4_quizkamp_server.Client.GUI.Panels;
 import java.awt.AlphaComposite;
+import Sprint4_quizkamp_server.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;

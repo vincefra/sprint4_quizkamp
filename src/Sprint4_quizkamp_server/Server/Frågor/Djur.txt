@@ -1,2 +1,8 @@
-Vilket land gränsar till Sverige?;DJUR;Tyskland;Storbrittanien;Sydafrika;
-I vilket landskap ligger Malung;DJUR;Skåne;Västerbotten;Medelpad;
+Vilket är världens största däggdjur?;Blåval;Husmus;Fågel Fenix;Människan;
+Vad heter Sibirisk Tiger på Latin?;Panthera tigris altaica;Rotmos;Flygande Jakob;Pippi Långstrump;
+Vilket är världens största däggdjur?;Blåval;Husmus;Fågel Fenix;Människan;
+Vad heter Sibirisk Tiger på Latin?;Panthera tigris altaica;Rotmos;Flygande Jakob;Pippi Långstrump;
+Vilket är världens största däggdjur?;Blåval;Husmus;Fågel Fenix;Människan;
+Vad heter Sibirisk Tiger på Latin?;Panthera tigris altaica;Rotmos;Flygande Jakob;Pippi Långstrump;
+Vilket är världens största däggdjur?;Blåval;Husmus;Fågel Fenix;Människan;
+Vad heter Sibirisk Tiger på Latin?;Panthera tigris altaica;Rotmos;Flygande Jakob;Pippi Långstrump;

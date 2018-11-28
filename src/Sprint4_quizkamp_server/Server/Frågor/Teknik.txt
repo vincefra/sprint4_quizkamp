@@ -1,2 +1,6 @@
-Vilket land gränsar till Sverige?;TEKNIK;Tyskland;Storbrittanien;Sydafrika;
-I vilket landskap ligger Malung;TEKNIK;Skåne;Västerbotten;Medelpad;
+Vilket år släpptes den första iPhonen?;2007;2005;2010;2011;
+Vad heter Apples VD?;Tim Cook;Henry Jönsson;Sickan;Barack Obama;
+Vad är Java?;Ett programmeringsspråk;En maträtt;Produkt från Ikea;En satellit;
+Vilket år släpptes den första iPhonen?;2007;2005;2010;2011;
+Vad heter Apples VD?;Tim Cook;Henry Jönsson;Sickan;Barack Obama;
+Vad är Java?;Ett programmeringsspråk;En maträtt;Produkt från Ikea;En satellit;

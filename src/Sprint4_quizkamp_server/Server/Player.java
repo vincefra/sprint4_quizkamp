@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Player implements Runnable {
     
     public String name;
-    public int currentQuestionIndex;
     public Socket socket;
     public Game game;
     private ObjectInputStream inputStream;
@@ -45,7 +44,7 @@ public class Player implements Runnable {
                 game.messageRecivedFromPlayer(objectRecived, this);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         
     }

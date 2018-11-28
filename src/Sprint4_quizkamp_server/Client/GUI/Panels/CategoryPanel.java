@@ -2,6 +2,8 @@ package Sprint4_quizkamp_server.Client.GUI.Panels;
 
 import Sprint4_quizkamp_server.Client.Client;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
+import Sprint4_quizkamp_server.Sprint4_quizkamp_server;
+import Sprint4_quizkamp_server.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +20,7 @@ public class CategoryPanel extends JPanel implements ActionListener {
     private JButton cat3Button = new MyJButton("Politik",MyJButton.sky);
     private ShowCategoriesAction action; 
     private Font font= new Font("SansSerif", Font.BOLD, 28);
-    private Icon backIcon= new ImageIcon("src/background.jpg");
+    private Icon backIcon= new ImageIcon(Locations.bgPath());
     private Color color= new Color(96,165,191);
 
 

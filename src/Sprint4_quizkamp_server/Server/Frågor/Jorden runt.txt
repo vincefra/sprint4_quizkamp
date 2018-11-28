@@ -1,2 +1,10 @@
 Vilket land gränsar till Sverige?;Norge;Tyskland;Storbrittanien;Sydafrika;
-I vilket landskap ligger Malung;Dalarna;Skåne;Västerbotten;Medelpad;
+I vilket landskap ligger Malung?;Dalarna;Skåne;Västerbotten;Medelpad;
+Vilken stad kallas ibland för The Big Apple?;New York;London;Mexico City;Malmö;
+I vilket land ligger staden Bombay?;Indien;Thailand;Sverige;Australien;
+Vad är jordens omkrets?;4 007 mil;1 000 mil;7 000 mil;11 000 mil;
+Vilket land gränsar till Sverige?;Norge;Tyskland;Storbrittanien;Sydafrika;
+I vilket landskap ligger Malung?;Dalarna;Skåne;Västerbotten;Medelpad;
+Vilken stad kallas ibland för The Big Apple?;New York;London;Mexico City;Malmö;
+I vilket land ligger staden Bombay?;Indien;Thailand;Sverige;Australien;
+Vad är jordens omkrets?;4 007 mil;1 000 mil;7 000 mil;11 000 mil;

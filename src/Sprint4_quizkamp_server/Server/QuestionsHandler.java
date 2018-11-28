@@ -3,7 +3,7 @@ package Sprint4_quizkamp_server.Server;
 
 
 import Sprint4_quizkamp_server.Sprint4_quizkamp_server;
-
+import Sprint4_quizkamp_server.*;
 import java.io.File;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionsHandler {
-
-    // TODO: ändra till relativ sökväg.
-    private static final String questionPath = "C:\\Users\\Asd\\Dropbox\\Nackademin\\Kurs Objektorienterad programmering och Java\\Quizkampen\\sprint4_quizkamp\\src\\Sprint4_quizkamp_server\\Server\\Frågor";
+    
     private static ArrayList<Category> categories;
     
     // Läser in alla frågor och kategorier från hårddisken.
@@ -23,7 +21,7 @@ public class QuestionsHandler {
         categories = new ArrayList<>();
         
         // Hämta alla filer/kategorier.
-        File folder = new File(questionPath);
+        File folder = new File(Locations.questionsPath());
         File[] files = folder.listFiles();
         
         for (File file : files) {

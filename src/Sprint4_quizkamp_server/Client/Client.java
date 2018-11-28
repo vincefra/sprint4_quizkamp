@@ -65,7 +65,7 @@ public class Client {
         } else if (o instanceof ShowQuestionAction) {
             GuiController.ShowQuestionWindow((ShowQuestionAction) o);
         } else if (o instanceof ShowResultAction) {
-            GuiController.ShowResultWindow();
+            GuiController.ShowResultWindow((ShowResultAction)o);
         } else if (o instanceof ShowWaitingAction) {
             GuiController.ShowWaitingWindow((ShowWaitingAction) o);
         } else {
