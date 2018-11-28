@@ -9,9 +9,9 @@ import java.util.Properties;
 
 public class Game {
     
-    public Player player1;
-    public Player player2;
-    public Player currentPlayer;
+    public Player player1 = null;
+    public Player player2 = null;
+    public Player lastPlayer = null;
     
     private Question[] currentQuestions;
     
@@ -34,11 +34,13 @@ public class Game {
         numQuestions = Integer.parseInt(p.getProperty("numberOfQuestions", "2"));
         numRounds = Integer.parseInt(p.getProperty("numberOfRounds", "2"));
         System.out.println(numQuestions + " " + numRounds);
-
+        
+        lastPlayer = player2;
+        
         System.out.println("SERVER: startar game");
     }
     
-    public void messageRecivedFromPlayer(Object message, Player player) throws InterruptedException 
+    public void messageRecivedFromPlayer(Object message, Player player) throws InterruptedException, IOException 
     {
         System.out.println("SERVER tagit emot meddelande/objekt: " + message + " FROM " + player);
 
@@ -98,46 +100,112 @@ public class Game {
     
     //rond 2
     
-    private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException
+    private Player swapPlayer(Player player)
     {
+        if (player == player1)
+            return player2;
+        
+        return player1;
+    }
+    
+    private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException, IOException
+    {
+        //när spelare har svarat på en fråga
+        
         //sätt dit score på spelare
         setPlayerScore(data, player);
+        
         
         //player har svarat på sista frågan
         if (data.questionNumber >= numQuestions)
         {
-            //player är player 2, ska till nästa stadie
-            if (player == player2)
+            if (player == lastPlayer)
             {
-                //runda 1 klar för p1 och p2
-                currentRound++;
+                showResultWindow(5000);
                 
-                ShowResultAction a = setResultAction(this);
-                showResultWindowToSend(a, player1);
-                showResultWindowToSend(a, player2);
-                
-                Thread.sleep(5000);
-                
-                //checka antal spelade ronder också!!!!!
-                //swapPlayer(player1, player2);
-                
-                System.out.println("yay, skicka resultat!");
-                //skicka resultatfönster till p1 och p2
+                //ifall vi har nått maxrundor
+                if (currentRound < numRounds)
+                {
+                    //vi skickar kategorierna till lastPlayer aka p2
+                    showCategoriesToSend(lastPlayer);
+                    
+                    //vi byter plats på spelarna
+                    lastPlayer = swapPlayer(player);
+                    
+                    //ber lastPlayer att vänta tills p1 har svarat klart
+                    showWaitingWindowToSend(lastPlayer);
+                }
+                else
+                {
+                    //stänger anslutning till p1 och p2, spelet är slut!
+                    player1.socket.close();
+                    player2.socket.close();
+                }
             }
-            
-            data.questionNumber = 0;
-            showWaitingWindowToSend(player);
-            
-            if (player2 == null)
+            else
             {
-                //skicka att vi väntar på player 2
-                return;
-            }
             
-            player = player.game.player2;
+                data.questionNumber = 0;
+
+                if (lastPlayer == null)
+                {
+                    showWaitingWindowToSend(player);
+                    return;
+                }
+                lastPlayer = swapPlayer(player);
+            }
         }
         showQuestionsToSend(data, player);
     }
+    
+    private void showResultWindow(int sleep) throws InterruptedException
+    {
+        ShowResultAction a = setResultAction(this);
+        showResultWindowToSend(a, player1);
+        showResultWindowToSend(a, player2);
+        Thread.sleep(sleep);
+    }
+    
+//    private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException
+//    {
+//        //sätt dit score på spelare
+//        setPlayerScore(data, player);
+//        
+//        //player har svarat på sista frågan
+//        if (data.questionNumber >= numQuestions)
+//        {
+//            //player är player 2, ska till nästa stadie
+//            if (player == player2)
+//            {
+//                //runda 1 klar för p1 och p2
+//                currentRound++;
+//                
+//                ShowResultAction a = setResultAction(this);
+//                showResultWindowToSend(a, player1);
+//                showResultWindowToSend(a, player2);
+//                
+//                Thread.sleep(5000);
+//                
+//                //checka antal spelade ronder också!!!!!
+//                //swapPlayer(player1, player2);
+//                
+//                System.out.println("yay, skicka resultat!");
+//                //skicka resultatfönster till p1 och p2
+//            }
+//            
+//            data.questionNumber = 0;
+//            showWaitingWindowToSend(player);
+//            
+//            if (player2 == null)
+//            {
+//                //skicka att vi väntar på player 2
+//                return;
+//            }
+//            
+//            currentPlayer = swapPlayer(player);
+//        }
+//        showQuestionsToSend(data, player);
+//    }
     
     private void showUsernameReceived(NameAction data, Player player)
     {
@@ -168,7 +236,7 @@ public class Game {
     private void showCategoriesReceived(ShowCategoriesAction data, Player player)
     {
         ShowQuestionAction q = new ShowQuestionAction();
-        currentQuestions = QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, true);
+        currentQuestions = QuestionsHandler.GetQuestions(QuestionsHandler.GetCategoryNum(data.chosenCategory), numQuestions, false);
         q.question = currentQuestions[q.questionNumber];
         
         Server.sendObject(player, q);

@@ -24,6 +24,8 @@ public class Server {
         // Läs in frågorna.
         QuestionsHandler.init();
         
+        //kolla när player 1 och player 2 har lämnat, och två nya ansluter så blir det null när player 1 har valt svar på fråga 1
+        
         System.out.print("Listening - " + InetAddress.getLocalHost() + ":" + SERVER_PORT);
         
         try {

@@ -17,7 +17,7 @@ public class QuestionsHandler {
     // TODO: ändra till relativ sökväg.
     private static final String questionPath = "src/Sprint4_quizkamp_server/Server/Frågor";
     private static ArrayList<Category> categories;
-    
+ 
     public static ArrayList<Category> getCategories() {
         return categories;
     }
@@ -41,6 +41,11 @@ public class QuestionsHandler {
         }
     }
     
+    public static void clearQuestions()
+    {
+        
+    }
+    
     public static int GetCategoryNum(String category)
     {
         for (int x = 0; x < getCategories().size() - 1; x++)
@@ -54,6 +59,8 @@ public class QuestionsHandler {
         Category category = categories.get(categoryNum);
         Question[] questionsToReturn = new Question[numberOfQuestions];
         
+        Category tempCategory = category;
+        
         // Om vi frågar efter fler frågor än det finns.
         if (numberOfQuestions > category.questions.size()) {
             throw new UncheckedIOException("Finns inte tillräckligt med frågor!", null);
@@ -61,15 +68,15 @@ public class QuestionsHandler {
         
         // Hämta ut frågorna.
         for (int i = 0; i < questionsToReturn.length; i++) {
-            int index = Sprint4_quizkamp_server.GetRandomNum(0, category.questions.size());
-            Question question = category.questions.get(index);
+            int index = Sprint4_quizkamp_server.GetRandomNum(0, tempCategory.questions.size());
+            Question question = tempCategory.questions.get(index);
             
             // Lägg till i arrayen.
             questionsToReturn[i] = question;
             
             // Ta ev. bort frågan.
             if (remove) {
-                category.questions.remove(index);
+                tempCategory.questions.remove(index);
             }
         }
         
