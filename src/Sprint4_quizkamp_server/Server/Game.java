@@ -55,14 +55,15 @@ public class Game {
     
     private ShowResultAction setResultAction(Game game)
     {
-        System.out.println(game.player1.roundScore.values());
-        System.out.println(game.player2.roundScore.values());
-        
         ShowResultAction a = new ShowResultAction();
+
+        for (int x = 0; x < currentRound; x++)
+        {
+            a.player1.put(x, player1.roundScore.get(x));
+            a.player2.put(x, player2.roundScore.get(x));
+        }
         a.name1 = game.player1.name;
         a.name2 = game.player2.name;
-        a.player1 = game.player1.roundScore;
-        a.player2 = game.player2.roundScore;
         a.rondNum = this.numRounds;
         
         return a;
@@ -75,6 +76,7 @@ public class Game {
         
         if (data.question.getCorrectAnswer().equalsIgnoreCase(data.pickedAnswer))
             player.roundScore.put(currentRound, player.roundScore.get(currentRound)+1);
+        
     }
     
     private Player swapPlayer(Player player)
@@ -87,8 +89,6 @@ public class Game {
     
     private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException, IOException
     {
-        //när spelare har svarat på en fråga
-        
         //sätt dit score på spelare
         setPlayerScore(data, player);
         
@@ -104,7 +104,7 @@ public class Game {
                 showResultWindow(3000);
                 
                 //ifall vi har nått maxrundor
-                if (currentRound <= numRounds)
+                if (currentRound < numRounds)
                 {
                     //vi skickar kategorierna till lastPlayer aka p2
                     showCategoriesToSend(lastPlayer);
@@ -126,12 +126,13 @@ public class Game {
             }
             else
             {
-
                 showWaitingWindowToSend(player);
                 player = swapPlayer(player);
             }
         }
-        showQuestionsToSend(data, player);
+        
+        if (player != null)
+            showQuestionsToSend(data, player);
     }
     
     private void showResultWindow(int sleep) throws InterruptedException
@@ -143,56 +144,15 @@ public class Game {
         Thread.sleep(sleep);
     }
     
-//    private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException
-//    {
-//        //sätt dit score på spelare
-//        setPlayerScore(data, player);
-//        
-//        //player har svarat på sista frågan
-//        if (data.questionNumber >= numQuestions)
-//        {
-//            //player är player 2, ska till nästa stadie
-//            if (player == player2)
-//            {
-//                //runda 1 klar för p1 och p2
-//                currentRound++;
-//                
-//                ShowResultAction a = setResultAction(this);
-//                showResultWindowToSend(a, player1);
-//                showResultWindowToSend(a, player2);
-//                
-//                Thread.sleep(5000);
-//                
-//                //checka antal spelade ronder också!!!!!
-//                //swapPlayer(player1, player2);
-//                
-//                System.out.println("yay, skicka resultat!");
-//                //skicka resultatfönster till p1 och p2
-//            }
-//            
-//            data.questionNumber = 0;
-//            showWaitingWindowToSend(player);
-//            
-//            if (player2 == null)
-//            {
-//                //skicka att vi väntar på player 2
-//                return;
-//            }
-//            
-//            currentPlayer = swapPlayer(player);
-//        }
-//        showQuestionsToSend(data, player);
-//    }
-    
     private void showUsernameReceived(NameAction data, Player player)
     {
         player.name = data.name;
         
         if (player1 == player)
-            showCategoriesToSend(player);
+            showWaitingWindowToSend(player);
         else
         {
-            //visa player 2 att vänta
+            showCategoriesToSend(player1);
             showWaitingWindowToSend(player);
             lastPlayer = player;
         }
