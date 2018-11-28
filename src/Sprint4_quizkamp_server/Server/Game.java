@@ -35,8 +35,6 @@ public class Game {
         numRounds = Integer.parseInt(p.getProperty("numberOfRounds", "2"));
         System.out.println(numQuestions + " " + numRounds);
         
-        lastPlayer = player2;
-        
         System.out.println("SERVER: startar game");
     }
     
@@ -55,16 +53,11 @@ public class Game {
         }
     }
     
-    /*
-    private void swapPlayer(Player player1, Player player2)
-    {
-        Player temp = player1;
-        player1 = player2;
-        player2 = temp;
-    }*/
-    
     private ShowResultAction setResultAction(Game game)
     {
+        System.out.println(game.player1.roundScore.values());
+        System.out.println(game.player2.roundScore.values());
+        
         ShowResultAction a = new ShowResultAction();
         a.name1 = game.player1.name;
         a.name2 = game.player2.name;
@@ -84,22 +77,6 @@ public class Game {
             player.roundScore.put(currentRound, player.roundScore.get(currentRound)+1);
     }
     
-    //0,1,2,3 fråga 1
-    //0,1,2,3 fråga 2
-    
-    //index 0 to 1 = 1 round
-    
-    //1, 2 = 1 rond, 2 right
-    //1 , 1 = 1 rond, 1 right
-    //
-    
-    //rond 1
-    
-    //0,1,2,3 fråga 1
-    //0,1,2,3 fråga 2
-    
-    //rond 2
-    
     private Player swapPlayer(Player player)
     {
         if (player == player1)
@@ -115,16 +92,19 @@ public class Game {
         //sätt dit score på spelare
         setPlayerScore(data, player);
         
-        
         //player har svarat på sista frågan
         if (data.questionNumber >= numQuestions)
         {
+            //återställ frågeposition
+            data.questionNumber = 0;
+            
             if (player == lastPlayer)
             {
-                showResultWindow(5000);
+                currentRound++;
+                showResultWindow(3000);
                 
                 //ifall vi har nått maxrundor
-                if (currentRound < numRounds)
+                if (currentRound <= numRounds)
                 {
                     //vi skickar kategorierna till lastPlayer aka p2
                     showCategoriesToSend(lastPlayer);
@@ -134,25 +114,21 @@ public class Game {
                     
                     //ber lastPlayer att vänta tills p1 har svarat klart
                     showWaitingWindowToSend(lastPlayer);
+                    return;
                 }
                 else
                 {
                     //stänger anslutning till p1 och p2, spelet är slut!
                     player1.socket.close();
                     player2.socket.close();
+                    return;
                 }
             }
             else
             {
-            
-                data.questionNumber = 0;
 
-                if (lastPlayer == null)
-                {
-                    showWaitingWindowToSend(player);
-                    return;
-                }
-                lastPlayer = swapPlayer(player);
+                showWaitingWindowToSend(player);
+                player = swapPlayer(player);
             }
         }
         showQuestionsToSend(data, player);
@@ -160,6 +136,7 @@ public class Game {
     
     private void showResultWindow(int sleep) throws InterruptedException
     {
+        
         ShowResultAction a = setResultAction(this);
         showResultWindowToSend(a, player1);
         showResultWindowToSend(a, player2);
@@ -214,8 +191,11 @@ public class Game {
         if (player1 == player)
             showCategoriesToSend(player);
         else
+        {
             //visa player 2 att vänta
             showWaitingWindowToSend(player);
+            lastPlayer = player;
+        }
     }
     
     private void showWaitingWindowToSend(Player player)

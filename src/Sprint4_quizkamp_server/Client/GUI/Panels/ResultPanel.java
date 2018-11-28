@@ -64,11 +64,13 @@ public class ResultPanel extends JPanel {
 
             }
             else if(i%3==0){
-                if (this.action.player1.get((i/3)-1) != null)
+                if (this.action.player1.containsKey((i/3)-1))
                     resultLabels[i].setText(Integer.toString(this.action.player1.get((i/3)-1)));
             }
             else{
-                if (this.action.player1.get((i/3)-1) != null)
+                System.out.print("- ");
+                System.out.println((i/3)-1);
+                if (this.action.player1.containsKey((i/3)-1))
                     resultLabels[i].setText(Integer.toString(this.action.player2.get((i/3)-1)));
             }
         }

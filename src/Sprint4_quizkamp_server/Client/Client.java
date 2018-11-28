@@ -21,7 +21,7 @@ public class Client {
         //Create ip/port-variables and an arraylist for storing received objects
         InetAddress ip = null;
         try {
-            ip = InetAddress.getByName("127.20.202.46");
+            ip = InetAddress.getByName("172.20.202.151");
         } catch (UnknownHostException e) {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
