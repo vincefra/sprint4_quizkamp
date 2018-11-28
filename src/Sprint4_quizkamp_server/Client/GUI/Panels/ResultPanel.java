@@ -7,8 +7,8 @@ import java.awt.*;
 public class ResultPanel extends JPanel {
 
     private int rondNum;
-    private int LabelSize=(rondNum+1)*3;
-    private JLabel[] resultLabels= new JLabel[LabelSize];
+    private int LabelSize;
+    private JLabel[] resultLabels;
     
     
 
@@ -26,6 +26,11 @@ public class ResultPanel extends JPanel {
     public ResultPanel(ShowResultAction action) {
         this.action= action;
         rondNum = this.action.rondNum;
+        LabelSize = (rondNum+1)*3;
+        resultLabels = new JLabel[LabelSize];
+        System.out.println("LabelSize: " + LabelSize);
+        System.out.println("resultLabels: " + resultLabels.length);
+
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
@@ -48,21 +53,21 @@ public class ResultPanel extends JPanel {
             }
             else if(i==1){
                 resultLabels[i].setText("RESULT");
-                resultLabels[1].setIcon(backIcon);
+                resultLabels[i].setIcon(backIcon);
                 setLabelStyle(resultLabels[i], font2, Color.yellow, JLabel.CENTER);
                 resultLabels[i].setHorizontalTextPosition(JLabel.CENTER);
                 resultLabels[i].setVerticalTextPosition(JLabel.CENTER);
             }
             else if(i%3==1){
-                resultLabels[i].setText("ROND "+i/3);
+                resultLabels[i].setText("ROND "+ (i/3));
                 setLabelStyle(resultLabels[i], font1, Color.yellow, JLabel.CENTER);
 
             }
             else if(i%3==0){
-                resultLabels[i].setText(Integer.toString(this.action.player1.get(i/3)));
+                resultLabels[i].setText(Integer.toString(this.action.player1.get((i/3)-1)));
             }
             else{
-                resultLabels[i].setText(Integer.toString(this.action.player2.get(i/3)));
+                resultLabels[i].setText(Integer.toString(this.action.player2.get((i/3)-1)));
             }
         }
         

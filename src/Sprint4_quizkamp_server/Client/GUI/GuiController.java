@@ -1,16 +1,10 @@
 package Sprint4_quizkamp_server.Client.GUI;
 
-import Sprint4_quizkamp_server.Client.GUI.Panels.CategoryPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.QuestionPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.ResultPanel;
-import Sprint4_quizkamp_server.Client.GUI.Panels.WaitingPanel;
+import Sprint4_quizkamp_server.Client.GUI.Panels.*;
 import Sprint4_quizkamp_server.Server.Actions.ShowCategoriesAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowWaitingAction;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GuiController {
 
