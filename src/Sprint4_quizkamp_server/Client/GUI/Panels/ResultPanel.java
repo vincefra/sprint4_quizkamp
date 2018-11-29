@@ -8,16 +8,10 @@ public class ResultPanel extends JPanel {
 
     private int rondNum;
     private int LabelSize;
-    private JLabel[] resultLabels;
-    
-    
-
-    private JButton geUppButton= new JButton("Ge upp");
+    private JLabel[] resultLabels;    
     private JPanel recordPanel= new JPanel();
-    private JPanel buttonPanel= new JPanel();
     private Font font1= new Font("SansSerif", Font.PLAIN, 20);
     private Font font2= new Font("SansSerif", Font.BOLD, 30);
-    private JButton spelaButton= new MyJButton("SPELA",MyJButton.sky);
     private Icon backIcon= new ImageIcon("src/background.jpg");
     private ShowResultAction action;
   
@@ -33,13 +27,9 @@ public class ResultPanel extends JPanel {
 
         setLayout(new BorderLayout());
         add(recordPanel, BorderLayout.CENTER);
-        add(buttonPanel, BorderLayout.SOUTH);
-        recordPanel.setLayout(new GridLayout((rondNum+1), 3, 4, 4));
-        buttonPanel.setLayout(new FlowLayout());
-        
+        recordPanel.setLayout(new GridLayout((rondNum+1), 3, 4, 4));        
         recordPanel.setBackground(new Color(96,165,191));
-        buttonPanel.setBackground(new Color(96,165,191));
-        
+       
         for(int i=0;i<LabelSize;i++){
             resultLabels[i]= new JLabel();
             setLabelStyle(resultLabels[i], font1, Color.WHITE, JLabel.CENTER);
@@ -74,14 +64,6 @@ public class ResultPanel extends JPanel {
                     resultLabels[i].setText(Integer.toString(this.action.player2.get((i/3)-1)));
             }
         }
-        
-        
-     
-       
-        buttonPanel.add(spelaButton);
-        buttonPanel.add(geUppButton);
-         
-        
 
     }
     
