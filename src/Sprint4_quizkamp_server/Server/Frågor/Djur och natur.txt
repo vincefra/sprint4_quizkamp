@@ -1,5 +1,5 @@
-Vad är Kanadas nationaldjur?;Amerikansk bäver;Noshörning;Känguru;Hackspett;
+Vad är Kanadas nationaldjur?;Bäver;Noshörning;Känguru;Hackspett;
 Vilket träd är inte ett barrträd?;Ek;Gran;En;Tall;
 Vad är Skottlands nationaldjur?;Enhörning;Talgoxe;Räv;Älg;
-Finns det hajar i Svenska vatten?;Endast på Västkusten;Nej;Ja, överallt;Endast under sommaren;
+Finns det hajar i Svenska vatten?;På Västkusten;Nej;Ja, överallt;På sommaren;
 Vad heter världens största haj?;Valhaj;Vithaj;Hammarhaj;Tigerhaj;

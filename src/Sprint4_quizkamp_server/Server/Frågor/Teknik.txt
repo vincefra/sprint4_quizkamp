@@ -1,4 +1,4 @@
-Vad heter Apples grundare som gick bort 2011?; Steve Jobs;Steve Wozniak;Bill Gates;Napoleon;
-Vad är en Chromecast?;En mediamottagare för tvn;En blender;Ett flygplan;En högtalare;
+Apples grundare som gick bort 2011?; Steve Jobs;Steve Wozniak;Bill Gates;Napoleon;
+Vad är en Chromecast?;Mediamottagare för tv;En blender;Ett flygplan;En högtalare;
 När grundades Microsoft?;1975;2011;1962;1984;
 Från vilket land kommer företaget Huawei?;Kina;Japan;Bulgarien;USA;
