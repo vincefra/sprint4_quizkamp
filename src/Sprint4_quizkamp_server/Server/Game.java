@@ -18,7 +18,7 @@ public class Game {
     int numQuestions, numRounds, currentRound;
     
     public boolean isFull() {
-        return player1 != null && player2 != null;
+        return lastPlayer != null;
     }
     
     public void startGame() {
@@ -89,6 +89,7 @@ public class Game {
     
     private void showQuestionsReceived(ShowQuestionAction data, Player player) throws InterruptedException, IOException
     {
+        Thread.sleep(1000);
         //sätt dit score på spelare
         setPlayerScore(data, player);
         
@@ -198,8 +199,6 @@ public class Game {
     
     private void showResultWindowToSend(ShowResultAction data, Player player)
     {
-        ShowResultAction r = data;
-        
-        Server.sendObject(player, r);
+        Server.sendObject(player, data);
     }
 }

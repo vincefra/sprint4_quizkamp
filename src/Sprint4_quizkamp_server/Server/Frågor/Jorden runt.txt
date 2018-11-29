@@ -1,2 +1,4 @@
-Vilket land gränsar till Sverige?;Norge;Tyskland;Storbrittanien;Sydafrika;
+Vilket land gränsar till Sverige?;Norge;Tyskland;Storbritannien;Sydafrika;
 I vilket landskap ligger Malung;Dalarna;Skåne;Västerbotten;Medelpad;
+Vilket berg i Turkiet sägs Noaks ark ha strandat på?;Ararat;Ida;Cudi;Mykale;
+I vilket land finns Triumfbågen?;Frankrike;Belgien;Spanien;Tjeckien;
