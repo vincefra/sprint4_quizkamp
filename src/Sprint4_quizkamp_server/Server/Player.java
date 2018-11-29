@@ -8,34 +8,33 @@ import java.net.Socket;
 import java.util.HashMap;
 
 public class Player implements Runnable, Serializable {
-    
+
     public Socket socket;
     public Game game;
     public ObjectOutputStream outputStream;
     public HashMap<Integer, Integer> roundScore = new HashMap<>();
-    
-    private ObjectInputStream inputStream;  
-    private Thread activity = new Thread(this);
-    
     protected String name;
-    
+    private ObjectInputStream inputStream;
+    private Thread activity = new Thread(this);
+
     public Player(Socket socket, Game game) {
         this.socket = socket;
         this.game = game;
-        
+
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException e) { }
-        
+        } catch (IOException e) {
+        }
+
         activity.start(); // Starta tråden.
     }
-    
+
     @Override
     public void run() {
         checkForMessages();
     }
-    
+
     private void checkForMessages() {
         try {
             while (true) {
@@ -46,6 +45,6 @@ public class Player implements Runnable, Serializable {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
     }
 }

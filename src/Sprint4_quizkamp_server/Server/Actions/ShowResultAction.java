@@ -5,8 +5,8 @@ import java.util.HashMap;
 public class ShowResultAction extends Action {
 
     //int score, String namn
-    public HashMap<Integer,Integer> player1 = new HashMap<>();  
-    public HashMap<Integer,Integer> player2 = new HashMap<>(); 
+    public HashMap<Integer, Integer> player1 = new HashMap<>();
+    public HashMap<Integer, Integer> player2 = new HashMap<>();
     public String name1;
     public String name2;
     public int rondNum;

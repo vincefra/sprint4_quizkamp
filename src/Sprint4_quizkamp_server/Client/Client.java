@@ -6,13 +6,15 @@ import Sprint4_quizkamp_server.Server.Actions.ShowQuestionAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowResultAction;
 import Sprint4_quizkamp_server.Server.Actions.ShowWaitingAction;
 import Sprint4_quizkamp_server.Server.Server;
-import java.io.*;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-    
+
     private static ObjectOutputStream objectOut;
     private static ObjectInputStream objectIn;
 
@@ -26,16 +28,16 @@ public class Client {
             System.out.println("InetAdress - IP address of host could not be determined");
             e.printStackTrace();
         }
-        
-        
+
+
         //Try connecting to server
         try {
             Socket socketToServer = new Socket(ip, Server.SERVER_PORT);
             objectOut = new ObjectOutputStream(socketToServer.getOutputStream());
             objectIn = new ObjectInputStream(socketToServer.getInputStream());
-    
+
 //            sendToServer("hej");
-            
+
             Object receivedObject;
             receivedObject = objectIn.readObject();
             while (receivedObject != null) {
@@ -43,10 +45,11 @@ public class Client {
                 objectRecivedFromServer(receivedObject);
                 receivedObject = objectIn.readObject();
             }
-            
-        } catch (Exception e) { }
+
+        } catch (Exception e) {
+        }
     }
-    
+
     public static void sendToServer(Object o) {
         try {
             System.out.println("inuti sendtoserver");
@@ -56,7 +59,7 @@ public class Client {
             e.printStackTrace();
         }
     }
-    
+
     private static void objectRecivedFromServer(Object o) {
 
         if (o instanceof ShowCategoriesAction) {
@@ -73,6 +76,6 @@ public class Client {
         }
 
     }
-    
-    
+
+
 }
